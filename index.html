@@ -1438,11 +1438,11 @@ const UN=[['Home','Welcome'],['Unit 1','Introduction'],['Unit 2','Microeconomics
 function buildNav(){
   const cur=sectOf(current);
   $('#units').innerHTML=UN.map(x=>{const first=ENTRIES.find(e=>sectOf(e.id)===x[0]);return '<a href="#'+first.id+'" class="'+(x[0]===cur?'on':'')+'"'+(x[0]===cur?' aria-current="true"':'')+'>'+x[1]+'</a>'}).join('');
-  const hit=e=>{if(!filter)return sectOf(e.id)===cur;const t=T.find(x=>x.id===e.id);if(e.id==='glossary'&&GLOSS.some(g=>(g[0]+' '+g[1]).toLowerCase().includes(filter)))return true;return (e.title+' '+(t?t.what:'')).toLowerCase().includes(filter)};
+  const hit=e=>{if(!filter)return sectOf(e.id)===cur;const t=T.find(x=>x.id===e.id);if(e.id==='glossary'&&GLOSS.some(g=>(g[0]+' '+g[1]).toLowerCase().includes(filter)))return true;return ((NUM[e.id]||'')+' '+e.title+' '+tv(e.title)+' '+(t?t.what+' '+(t.meaning||''):'')).toLowerCase().includes(filter)};
   const items=ENTRIES.filter(hit);let h='',so='',lastBand=null;
   const ts=T.filter(t=>unitNum(t)===cur);
   if(!filter&&ts.length)h+='<p class="prog">'+ts.filter(t=>studied[t.id]).length+' of '+ts.length+' studied</p>';
-  if(filter)h+='<p class="prog">Search results</p>';
+  if(filter&&items.length)h+='<p class="prog">Search results</p>';
   items.forEach(e=>{const t=T.find(x=>x.id===e.id);const band=t?(BAND[e.id]||e.unit):(e.unit==='Home'?'Start here':'Reference');
     if(band!==lastBand){if(!(items.length<2&&!filter))h+='<div class="bandl">'+band+'</div>';so+=(lastBand?'</optgroup>':'')+'<optgroup label="'+band+'">';lastBand=band}
     h+='<a href="#'+e.id+'" class="'+(e.id===current?'on':'')+'"'+(e.id===current?' aria-current="page"':'')+'><span class="n">'+(NUM[e.id]||'')+'</span>'+e.title+(t&&t.hl?'<small>HL</small>':'')+(studied[e.id]?'<small>done</small>':'')+'</a>';
@@ -1563,11 +1563,23 @@ function show(id){
     $('#chk').addEventListener('change',e=>onStudiedChange(id,e));
     $('#prev').onclick=()=>go(T[i-1].id);$('#next').onclick=()=>go(T[i+1].id)}
   try{localStorage.setItem('econ-last',id)}catch(e){}
-  buildNav();const mm=$('#main');const nsec=buildOnPage();setTab(nsec&&!filter?'sections':'contents');if(mm.classList){mm.classList.remove('swap');void mm.offsetWidth;mm.classList.add('swap')}if(mm.focus)mm.focus({preventScroll:true});applyLang(document.body);window.scrollTo({top:0})}
+  buildNav();const mm=$('#main');const nsec=buildOnPage();setTab(nsec&&!filter?'sections':'contents');if(mm.classList){mm.classList.remove('swap');void mm.offsetWidth;mm.classList.add('swap')}if(mm.focus&&document.activeElement!==$('#q'))mm.focus({preventScroll:true});applyLang(document.body);window.scrollTo({top:0})}
 function go(id){if(location.hash==='#'+id)show(id);else location.hash=id}
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(ENTRIES.some(e=>e.id===id))show(id)});
 $('#sel').addEventListener('change',e=>go(e.target.value));
-$('#q').addEventListener('input',e=>{filter=e.target.value.trim().toLowerCase();buildNav();if(current==='glossary')show('glossary')});
+function applySearch(val){
+  filter=val.trim().toLowerCase();
+  buildNav();
+  if(filter){setTab('contents')}
+  else{const onp=$('#onpage');setTab(onp&&onp.children.length?'sections':'contents')}
+  applyLang($('#nav'));
+  if(current==='glossary')show('glossary');
+}
+$('#q').addEventListener('input',e=>applySearch(e.target.value));
+$('#q').addEventListener('keydown',e=>{
+  if(e.key==='Enter'){const first=$('#nav a');if(first){e.preventDefault();go(first.getAttribute('href').slice(1))}}
+  else if(e.key==='Escape'&&e.target.value){e.target.value='';applySearch('')}
+});
 if(document.addEventListener){
  document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;if(/INPUT|SELECT|TEXTAREA|BUTTON|SUMMARY/.test(e.target.tagName))return;const i=T.findIndex(t=>t.id===current);if(i<0)return;if(e.key==='ArrowRight'&&i<T.length-1)go(T[i+1].id);if(e.key==='ArrowLeft'&&i>0)go(T[i-1].id)});
  document.addEventListener('click',e=>{const t=e.target;if(!t.closest)return;
