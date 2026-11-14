@@ -1,10 +1,12 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Econ App</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a3324"><title>Econ App</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:wght@400;500;600;700&display=swap">
 <style>
 :root{--ink:#222;--muted:#5d625f;--green:#0a3324;--link:#14513a;--mid:#1f6b49;--curve2:#2a8f60;--line:#dcdedc;--warm:#f9f8f6;--warm2:#f2f0ec;
 --serif:'Source Serif 4',Georgia,'Times New Roman',serif;--sans:'Source Sans 3',system-ui,-apple-system,'Segoe UI',sans-serif;
 --fg:var(--ink);--accent:var(--green);--accent2:var(--mid);--ease-out:cubic-bezier(0.23,1,0.32,1);color-scheme:light}
+html[lang="vi"]{--serif:'Noto Serif',Georgia,serif;--sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:#fff;color:var(--ink);font:18px/1.6 var(--serif);font-variant-numeric:tabular-nums}
@@ -97,13 +99,13 @@ code{font:inherit;background:var(--warm2);padding:2px 7px}
 .terms dd{margin:0;font-size:17px;line-height:1.6}
 .notes section{margin:0 0 24px}
 /* sidebar (Nature-style tabs) */
-.side{position:sticky;top:18px;align-self:start}
+.side{position:sticky;top:64px;align-self:start;background:#fff;padding-top:4px}
 .dl{display:block;background:var(--green);color:#fff;text-align:center;padding:12px 16px;font:600 15px var(--sans);text-decoration:none;margin:0 0 16px;transition:transform 140ms var(--ease-out)}
 .dl:active{transform:scale(.98)}
 .tabs{display:flex;background:#ececec}
 .tabs button{flex:1;background:none;border:0;padding:10px 12px;font:600 14.5px var(--sans);color:var(--ink);cursor:pointer}
 .tabs button.on{background:#fff;box-shadow:inset 0 3px 0 var(--green)}
-.panel{max-height:calc(100vh - 170px);overflow:auto;padding:14px 4px 0;scrollbar-width:thin}
+.panel{max-height:calc(100dvh - 210px);overflow:auto;padding:14px 4px 0;scrollbar-width:thin}
 .panel a{display:block;font:15px/1.35 var(--sans);padding:6px 0;color:var(--link)}
 .panel a.on{color:var(--ink);font-weight:700;text-decoration:none}
 .panel .bandl{font:italic 14px var(--sans);color:var(--muted);margin:14px 0 2px}
@@ -141,7 +143,9 @@ ul.att li span{color:var(--muted);font:14.5px var(--sans);text-align:right}
 .chip{background:#fff;border:1px solid var(--green);color:var(--green);padding:6px 14px;font:600 14.5px var(--sans);cursor:pointer;border-radius:16px}
 .chip.on{background:var(--green);color:#fff}
 .qa{margin:8px 0;background:var(--warm);padding:12px 16px}
-.qa summary{font:500 18px/1.5 var(--serif);color:var(--ink);text-decoration:none}
+.qa summary,.q-toggle{font:500 18px/1.5 var(--serif);color:var(--ink);text-decoration:none}
+.q-toggle{display:block;width:100%;text-align:left;background:none;border:0;padding:0;cursor:pointer}
+.qa-body{animation:reveal 200ms var(--ease-out)}
 .qn{color:var(--mid);font-weight:700;margin-right:8px}
 .qa p{margin:10px 0}
 .qb{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
@@ -158,6 +162,8 @@ ul.att li span{color:var(--muted);font:14.5px var(--sans);text-align:right}
 @keyframes toastin{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mini{transition:none}@keyframes swap{from{opacity:.5}to{opacity:1}}@keyframes reveal{from{opacity:0}to{opacity:1}}@keyframes toastin{from{opacity:0}to{opacity:1}}.pager button:active:not(:disabled),.qb button:active,.dl:active{transform:none}}
 @media (max-width:900px){
+ .top2{flex-wrap:wrap;gap:4px 18px;overflow-x:visible}
+ .top2 a{padding:6px 0 8px}
  .layout{grid-template-columns:minmax(0,1fr);gap:0}
  .side{display:none}
  .mobsel{display:block;padding:12px max(24px,env(safe-area-inset-left,0px)) 0}
@@ -194,8 +200,8 @@ ul.att li span{color:var(--muted);font:14.5px var(--sans);text-align:right}
 [hidden]{display:none!important}
 </style>
 
-</head><body><a class="skip" href="#" onclick="document.getElementById('main').focus();return false">Skip to content</a>
-<div class="mini" id="mini" aria-hidden="true"><b id="minit"></b><a id="minin" href="#welcome">Next topic</a></div>
+</head><body><a class="skip" href="#main" onclick="document.getElementById('main').focus();return false">Skip to content</a>
+<div class="mini" id="mini" aria-hidden="true" inert><b id="minit"></b><a id="minin" href="#welcome" tabindex="-1">Next topic</a></div>
 <header>
   <div class="top1"><a class="brand" id="brand" href="#welcome">econ app</a><div class="modesw" id="modesw" role="group" aria-label="Subject"><button type="button" data-mode="econ" aria-pressed="true">Economics</button><button type="button" data-mode="biz" aria-pressed="false">Business</button></div><div class="tr"><a id="tl1" href="#quiz">Self-test</a><a id="tl2" href="#practice">Practice bank</a><a id="tl3" href="#glossary">Key terms</a><button type="button" class="langbtn" id="lang">Tiếng Việt</button><input type="search" id="q" placeholder="Search" aria-label="Search topics and terms"></div></div>
   <nav class="top2" id="units" aria-label="Sections"></nav>
@@ -206,9 +212,9 @@ ul.att li span{color:var(--muted);font:14.5px var(--sans);text-align:right}
   <main id="main" tabindex="-1"></main>
   <aside class="side" id="side" aria-label="Topic navigation">
     <a class="dl" id="nextbtn" href="#welcome">Next topic</a>
-    <div class="tabs" role="tablist"><button type="button" role="tab" data-tab="sections" class="on">Sections</button><button type="button" role="tab" data-tab="contents">Contents</button></div>
-    <div class="panel" id="p-sections"><div id="onpage"></div></div>
-    <div class="panel" id="p-contents" hidden><div id="nav"></div></div>
+    <div class="tabs" role="tablist"><button type="button" role="tab" id="tab-sections" data-tab="sections" class="on" aria-selected="true" aria-controls="p-sections">Sections</button><button type="button" role="tab" id="tab-contents" data-tab="contents" aria-selected="false" aria-controls="p-contents">Contents</button></div>
+    <div class="panel" id="p-sections" role="tabpanel" aria-labelledby="tab-sections"><div id="onpage"></div></div>
+    <div class="panel" id="p-contents" role="tabpanel" aria-labelledby="tab-contents" hidden><div id="nav"></div></div>
     <p class="sync" id="sync"></p>
   </aside>
 </div>
@@ -1477,13 +1483,13 @@ function buildNav(){
   const lay=document.querySelector('#layout');if(lay&&lay.classList)lay.classList.toggle('nolist',cur==='Home'&&!filter);
   const i=T.findIndex(t=>t.id===current),nx=i>=0&&i<T.length-1?T[i+1]:null;
   [['#nextbtn','Next: '],['#minin','Next: ']].forEach(p=>{const el=$(p[0]);if(!el)return;el.hidden=!nx;if(nx){el.setAttribute('href','#'+nx.id);el.textContent=p[1]+nx.title}})}
-function setTab(n){['sections','contents'].forEach(k=>{const p=$('#p-'+k);if(p)p.hidden=k!==n;const b=document.querySelector('[data-tab="'+k+'"]');if(b&&b.classList)b.classList.toggle('on',k===n)})}
+function setTab(n){['sections','contents'].forEach(k=>{const p=$('#p-'+k);if(p)p.hidden=k!==n;const b=document.querySelector('[data-tab="'+k+'"]');if(b){if(b.classList)b.classList.toggle('on',k===n);b.setAttribute('aria-selected',k===n?'true':'false')}})}
 let spy,h1o;
 function buildOnPage(){const op=$('#onpage'),mm=$('#main');if(!op||!mm.querySelectorAll)return 0;if(spy)spy.disconnect();if(h1o)h1o.disconnect();
   const hs=[].slice.call(mm.querySelectorAll('h3'));
   const h1=mm.querySelector('h1'),mb=$('#mini');
-  if(h1&&mb){const mt=$('#minit');if(mt)mt.textContent=h1.textContent;if(window.IntersectionObserver){h1o=new IntersectionObserver(es=>{mb.classList.toggle('show',!es[0].isIntersecting&&es[0].boundingClientRect.top<0)});h1o.observe(h1)}}
-  if(hs.length<2){op.innerHTML='';return 0}
+  if(h1&&mb){const mt=$('#minit');if(mt)mt.textContent=h1.textContent;mb.classList.remove('show');mb.setAttribute('aria-hidden','true');mb.inert=true;const mn0=$('#minin');if(mn0)mn0.tabIndex=-1;if(window.IntersectionObserver){h1o=new IntersectionObserver(es=>{const shown=!es[0].isIntersecting&&es[0].boundingClientRect.top<0;mb.classList.toggle('show',shown);mb.setAttribute('aria-hidden',shown?'false':'true');mb.inert=!shown;const mn=$('#minin');if(mn)mn.tabIndex=shown?0:-1});h1o.observe(h1)}}
+  if(hs.length<2){op.innerHTML='<p class="prog">No sections on this page.</p>';return 0}
   op.innerHTML=hs.map((h,i)=>{h.id='sec'+i;return '<a href="#sec'+i+'">'+h.textContent+'</a>'}).join('');
   if(window.IntersectionObserver){spy=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){const id=en.target.id;op.querySelectorAll('a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id))}})},{rootMargin:'0px 0px -70% 0px'});hs.forEach(h=>spy.observe(h))}
   return hs.length}
@@ -1531,7 +1537,7 @@ function syncEcon(){
   return '<div class="card notes">'+refCrumb+'<h1>Sync log</h1><p class="what">Last synced with your ECON folder on <b>'+SYNC_DATE+'</b>. Material for next year goes in a later sync.</p><section><h3>Synced into the app</h3>'+tbl(['Class file','Used in'],used)+'</section><section><h3>Not synced yet</h3>'+tbl(['Class file','Why'],todo)+'</section></div>'}
 function renderNotes(t){
   const i=T.indexOf(t),id=t.id;
-  $('#main').innerHTML='<article class="art notes"><header class="chead">'+crumbHTML(t)+'<p class="meta"><span>Topic '+NUM[id]+'</span><span class="'+(t.hl?'hl':'')+'">'+(t.hl?'HL only':'SL and HL')+'</span><span>Updated: '+SYNC_DATE+'</span></p><h1>'+t.title+'</h1><p class="byline"><a href="#'+T.find(x=>unitNum(x)===unitNum(t)).id+'">'+unitName(t)+'</a>, '+(BAND[id]||'')+'</p><p class="acts"><label class="done"><input type="checkbox" id="chk" '+(studied[id]?'checked':'')+'> Mark as studied</label><a href="#" id="citeb">Cite this topic</a></p></header><section><h3>Summary</h3><p>'+t.what+'</p></section>'+t.notes.map(n=>'<section><h3>'+n.h+'</h3>'+n.html+'</section>').join('')+xt(id,'terms')+xt(id,'eval')+'<section class="practice"><h3>Exam practice</h3><p class="qtext">'+t.q+'</p><details><summary>Show model answer</summary><p>'+t.a+'</p></details></section>'+xt(id,'more')+'<div class="pager"><button id="prev" '+(i===0?'disabled':'')+'>← Previous</button><button id="next" '+(i===T.length-1?'disabled':'')+'>Next →</button></div></article>';
+  $('#main').innerHTML='<article class="art notes"><header class="chead">'+crumbHTML(t)+'<p class="meta"><span>Topic '+NUM[id]+'</span><span class="'+(t.hl?'hl':'')+'">'+(t.hl?'HL only':'SL and HL')+'</span><span>Updated: '+SYNC_DATE+'</span></p><h1>'+t.title+'</h1><p class="byline"><a href="#'+T.find(x=>unitNum(x)===unitNum(t)).id+'">'+unitName(t)+'</a>, '+(BAND[id]||'')+'</p><p class="acts"><label class="done"><input type="checkbox" id="chk" '+(studied[id]?'checked':'')+'> Mark as studied</label><button type="button" class="reset" id="citeb" style="margin:0">Cite this topic</button></p></header><section><h3>Summary</h3><p>'+t.what+'</p></section>'+t.notes.map(n=>'<section><h3>'+n.h+'</h3>'+n.html+'</section>').join('')+xt(id,'terms')+xt(id,'eval')+'<section class="practice"><h3>Exam practice</h3><p class="qtext">'+t.q+'</p><details><summary>Show model answer</summary><p>'+t.a+'</p></details></section>'+xt(id,'more')+'<div class="pager"><button id="prev" '+(i===0?'disabled':'')+'>← Previous</button><button id="next" '+(i===T.length-1?'disabled':'')+'>Next →</button></div></article>';
   $('#chk').addEventListener('change',e=>onStudiedChange(id,e));
   $('#prev').onclick=()=>go(T[i-1].id);$('#next').onclick=()=>go(T[i+1].id)}
 
@@ -1554,7 +1560,7 @@ function quizHTML(){
   const list=T.filter(t=>qfilter==='all'||(qfilter==='review'?quiz[t.id]==='review':unitNum(t)===qfilter));
   const got=T.filter(t=>quiz[t.id]==='got').length,rev=T.filter(t=>quiz[t.id]==='review').length;
   const chips=(MODE==='biz'?[['all','All'],['B1','Topic 1'],['B2','Topic 2'],['B3','Topic 3'],['B4','Topic 4'],['B5','Topic 5'],['review','To review']]:[['all','All'],['Unit 1','Unit 1'],['Unit 2','Unit 2'],['Unit 3','Unit 3'],['Unit 4','Unit 4'],['review','To review']]).map(c=>'<button type="button" class="chip'+(qfilter===c[0]?' on':'')+'" data-f="'+c[0]+'">'+c[1]+'</button>').join('');
-  const items=list.map(t=>'<details class="qa"><summary><span class="qn">'+NUM[t.id]+'</span> '+t.q+'</summary><p>'+t.a+'</p><div class="qb"><button type="button" data-g="'+t.id+'">I got it</button><button type="button" data-r="'+t.id+'">Review again</button><span class="qs" data-id="'+t.id+'">'+(quiz[t.id]==='got'?'Got it':quiz[t.id]==='review'?'To review':'')+'</span></div></details>').join('');
+  const items=list.map(t=>'<div class="qa"><button type="button" class="q-toggle" aria-expanded="false" aria-controls="qa-'+t.id+'"><span class="qn">'+NUM[t.id]+'</span> '+t.q+'</button><div class="qa-body" id="qa-'+t.id+'" hidden><p>'+t.a+'</p><div class="qb"><button type="button" data-g="'+t.id+'">I got it</button><button type="button" data-r="'+t.id+'">Review again</button><span class="qs" data-id="'+t.id+'">'+(quiz[t.id]==='got'?'Got it':quiz[t.id]==='review'?'To review':'')+'</span></div></div></div>').join('');
   return '<div class="card notes">'+refCrumb+'<h1>Self-test</h1><p class="what">Answer each question on paper first, then open the model answer and mark how you did. Your marks are saved on this device.</p><p class="obj" id="qsum"><b>'+got+'</b> got it, <b>'+rev+'</b> to review, <b>'+(T.length-got-rev)+'</b> not tried.</p><div class="chips">'+chips+'</div>'+(items||'<p class="obj">Nothing to review yet. Mark a question with "Review again" and it will appear here.</p>')+'</div>'}
 function welcomeEcon(){
   const units=['Unit 1','Unit 2','Unit 3','Unit 4'].map(u=>{const ts=T.filter(t=>unitNum(t)===u);const d=ts.filter(t=>studied[t.id]).length;return '<div class="tile"><div><b>'+unitName(ts[0])+'</b><span>'+ts.length+' topics, '+d+' studied</span></div><a class="pill" href="#'+ts[0].id+'">Study</a></div>'}).join('');
@@ -1609,9 +1615,9 @@ function show(id){
   else if(id==='sync'){main.innerHTML=syncHTML()}
   else if(t&&t.notes){renderNotes(t)}
   else if(id==='glossary'){main.innerHTML=`<div class="card">${refCrumb}<h1>Key terms</h1><p class="what">Definitions worth learning word for word. Examiners reward precise definitions.</p><div class="tw"><table><tr><th>Term</th><th>Definition</th><th>Unit</th></tr>${GLOSS.filter(g=>!filter||(g[0]+g[1]).toLowerCase().includes(filter)).map(g=>`<tr><td><b>${g[0]}</b></td><td>${g[1]}</td><td>${g[2]}</td></tr>`).join('')}</table></div></div>`}
-  else{
+  else if(t){
     const i=T.indexOf(t);
-    main.innerHTML=`<article class="art"><header class="chead">${crumbHTML(t)}<p class="meta"><span>Topic ${NUM[id]}</span><span class="${t.hl?'hl':''}">${t.hl?'HL only':'SL and HL'}</span><span>Updated: ${SYNC_DATE}</span></p><h1>${t.title}</h1><p class="byline"><a href="#${T.find(x=>unitNum(x)===unitNum(t)).id}">${unitName(t)}</a>, ${BAND[id]||''}</p><p class="acts"><label class="done"><input type="checkbox" id="chk" ${studied[id]?'checked':''}> Mark as studied</label><a href="#" id="citeb">Cite this topic</a></p></header><section><h3>Summary</h3><p>${t.what}</p></section><figure class="fig" style="margin-left:0;margin-right:0"><p class="ft"><b>Fig. ${NUM[id]}:</b> ${t.title}.</p><div class="chart" id="chart"></div><div class="ctrls" id="ctrls"></div><button type="button" class="reset" id="rs">Reset sliders</button><div class="read" id="read" aria-live="polite"></div><div class="key" id="key"></div><p class="fc">Move the sliders to change the diagram. The result line and the key update as you go.</p></figure><section><h3>Key idea</h3><p>${t.meaning}</p></section>${xt(id,'terms')}<section><h3>Constructing the diagram</h3><ol class="steps">${t.draw.map(d=>`<li>${d}</li>`).join('')}</ol></section>${xt(id,'eval')}<section><h3>Examiner tips</h3><ul>${t.tips.map(d=>`<li>${d}</li>`).join('')}</ul></section><section class="practice"><h3>Exam practice</h3><p class="qtext">${t.q}</p><details><summary>Show model answer</summary><p>${t.a}</p></details></section>${xt(id,'more')}<div class="pager"><button id="prev" ${i===0?'disabled':''}>← Previous</button><button id="next" ${i===T.length-1?'disabled':''}>Next →</button></div></article>`;
+    main.innerHTML=`<article class="art"><header class="chead">${crumbHTML(t)}<p class="meta"><span>Topic ${NUM[id]}</span><span class="${t.hl?'hl':''}">${t.hl?'HL only':'SL and HL'}</span><span>Updated: ${SYNC_DATE}</span></p><h1>${t.title}</h1><p class="byline"><a href="#${T.find(x=>unitNum(x)===unitNum(t)).id}">${unitName(t)}</a>, ${BAND[id]||''}</p><p class="acts"><label class="done"><input type="checkbox" id="chk" ${studied[id]?'checked':''}> Mark as studied</label><button type="button" class="reset" id="citeb" style="margin:0">Cite this topic</button></p></header><section><h3>Summary</h3><p>${t.what}</p></section><figure class="fig" style="margin-left:0;margin-right:0"><p class="ft"><b>Fig. ${NUM[id]}:</b> ${t.title}.</p><div class="chart" id="chart"></div><div class="ctrls" id="ctrls"></div><button type="button" class="reset" id="rs">Reset sliders</button><div class="read" id="read" aria-live="polite"></div><div class="key" id="key"></div><p class="fc">Move the sliders to change the diagram. The result line and the key update as you go.</p></figure><section><h3>Key idea</h3><p>${t.meaning}</p></section>${xt(id,'terms')}<section><h3>Constructing the diagram</h3><ol class="steps">${t.draw.map(d=>`<li>${d}</li>`).join('')}</ol></section>${xt(id,'eval')}<section><h3>Examiner tips</h3><ul>${t.tips.map(d=>`<li>${d}</li>`).join('')}</ul></section><section class="practice"><h3>Exam practice</h3><p class="qtext">${t.q}</p><details><summary>Show model answer</summary><p>${t.a}</p></details></section>${xt(id,'more')}<div class="pager"><button id="prev" ${i===0?'disabled':''}>← Previous</button><button id="next" ${i===T.length-1?'disabled':''}>Next →</button></div></article>`;
     const vals={};t.ctrl.forEach(c=>vals[c.id]=c.val);
     $('#ctrls').innerHTML=t.ctrl.map(c=>`<div class="ctrl"><label for="r-${c.id}">${c.label}<output id="o-${c.id}">${c.val}</output></label><input type="range" id="r-${c.id}" min="${c.min}" max="${c.max}" step="${c.step}" value="${c.val}"></div>`).join('');
     const draw=()=>{const s=t.f(vals);s.alt=t.title+' graph';$('#chart').innerHTML=render(s,t.id);$('#key').innerHTML=keyHTML(s,t.id);$('#read').innerHTML=trReadHTML(s.read);applyLang($('#chart'));applyLang($('#key'));applyLang($('#read'))};
@@ -1620,16 +1626,20 @@ function show(id){
     $('#rs').onclick=()=>{t.ctrl.forEach(c=>{vals[c.id]=c.val;$('#r-'+c.id).value=c.val;$('#o-'+c.id).textContent=c.val});draw()};
     $('#chk').addEventListener('change',e=>onStudiedChange(id,e));
     $('#prev').onclick=()=>go(T[i-1].id);$('#next').onclick=()=>go(T[i+1].id)}
+  else{
+    const safe=String(id).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    main.innerHTML=`<div class="card notes">${refCrumb}<h1>Page not found</h1><p class="what">No topic or page matches <code>#${safe}</code>.</p><p><a class="pill" href="#welcome">Back to Welcome</a></p></div>`;
+    buildNav();buildOnPage();setTab('contents');applyLang(document.body);window.scrollTo({top:0});return}
   try{localStorage.setItem('econ-last',id)}catch(e){}
   buildNav();const mm=$('#main');const nsec=buildOnPage();setTab(nsec&&!filter?'sections':'contents');if(mm.classList){mm.classList.remove('swap');void mm.offsetWidth;mm.classList.add('swap')}if(mm.focus&&document.activeElement!==$('#q'))mm.focus({preventScroll:true});applyLang(document.body);window.scrollTo({top:0})}
 function go(id){if(location.hash==='#'+id)show(id);else location.hash=id}
-window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);const e=ALLE.find(x=>x.id===id);if(!e)return;if(e.m!=='both'&&e.m!==MODE){MODE=e.m;try{localStorage.setItem('econ-mode',MODE)}catch(x){}applyMode()}show(id)});
+window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(!id){show(MODE==='biz'?'bwelcome':'welcome');return}if(/^sec\d+$/.test(id))return;const e=ALLE.find(x=>x.id===id);if(e&&e.m!=='both'&&e.m!==MODE){MODE=e.m;try{localStorage.setItem('econ-mode',MODE)}catch(x){}applyMode()}show(id)});
 $('#sel').addEventListener('change',e=>go(e.target.value));
 function applySearch(val){
   filter=val.trim().toLowerCase();
   buildNav();
   if(filter){setTab('contents')}
-  else{const onp=$('#onpage');setTab(onp&&onp.children.length?'sections':'contents')}
+  else{const onp=$('#onpage');setTab(onp&&onp.querySelectorAll('#onpage a').length?'sections':'contents')}
   applyLang($('#nav'));
   if(current==='glossary')show('glossary');
 }
@@ -1650,7 +1660,9 @@ if(document.addEventListener)document.addEventListener('click',e=>{const t=e.tar
   const lg=t.closest('#lang');if(lg){setLang(L==='vi'?'en':'vi');return}
   const tb=t.closest('[data-tab]');if(tb){setTab(tb.getAttribute('data-tab'));return}
   const cb=t.closest('#citeb');if(cb){e.preventDefault();const tt=T.find(x=>x.id===current);if(tt){const txt='Econ App. ('+SYNC_DATE.slice(-4)+'). '+tt.title+'. IB Economics HL and SL, topic '+NUM[current]+'. Last synced '+SYNC_DATE+'.';try{navigator.clipboard.writeText(txt).then(()=>toast('Citation copied.'),()=>toast(txt))}catch(err){toast(txt)}}return}
+  const qt=t.closest('.q-toggle');if(qt){const open=qt.getAttribute('aria-expanded')==='true';qt.setAttribute('aria-expanded',open?'false':'true');const body=document.getElementById(qt.getAttribute('aria-controls'));if(body)body.hidden=open;return}
   const a=t.closest('#onpage a');if(a){e.preventDefault();const el=document.getElementById(a.getAttribute('href').slice(1));if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}});
-const start=location.hash.slice(1);const se=ALLE.find(x=>x.id===start);if(se&&se.m!=='both')MODE=se.m;applyMode();show(se?start:(MODE==='biz'?'bwelcome':'welcome'));
+const start=location.hash.slice(1);const se=ALLE.find(x=>x.id===start);if(se&&se.m!=='both')MODE=se.m;applyMode();show(start?start:(MODE==='biz'?'bwelcome':'welcome'));
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{})})}
 </script>
 </body></html>

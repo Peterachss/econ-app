@@ -1,0 +1,10 @@
+{
+  "name": "Econ App",
+  "short_name": "Econ App",
+  "description": "IB Economics HL and SL graphs, notes, formulas, and self-test.",
+  "start_url": "./#welcome",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0a3324"
+}
