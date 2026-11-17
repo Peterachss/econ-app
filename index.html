@@ -1633,7 +1633,7 @@ function show(id){
   try{localStorage.setItem('econ-last',id)}catch(e){}
   buildNav();const mm=$('#main');const nsec=buildOnPage();setTab(nsec&&!filter?'sections':'contents');if(mm.classList){mm.classList.remove('swap');void mm.offsetWidth;mm.classList.add('swap')}if(mm.focus&&document.activeElement!==$('#q'))mm.focus({preventScroll:true});applyLang(document.body);window.scrollTo({top:0})}
 function go(id){if(location.hash==='#'+id)show(id);else location.hash=id}
-window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(!id){show(MODE==='biz'?'bwelcome':'welcome');return}if(/^sec\d+$/.test(id))return;const e=ALLE.find(x=>x.id===id);if(e&&e.m!=='both'&&e.m!==MODE){MODE=e.m;try{localStorage.setItem('econ-mode',MODE)}catch(x){}applyMode()}show(id)});
+window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(!id){show(MODE==='biz'?'bwelcome':'welcome');return}if(/^secd+$/.test(id))return;const e=ALLE.find(x=>x.id===id);if(e&&e.m!=='both'&&e.m!==MODE){MODE=e.m;try{localStorage.setItem('econ-mode',MODE)}catch(x){}applyMode()}show(id)});
 $('#sel').addEventListener('change',e=>go(e.target.value));
 const NTC={};function noteTxt(t){if(!t.notes)return '';return NTC[t.id]||(NTC[t.id]=t.notes.map(n=>n.h+' '+n.html.replace(/<[^>]+>/g,' ')).join(' ').replace(/&amp;/g,'&'))}
 function applySearch(val){
