@@ -155,7 +155,7 @@ ul.att li span{color:var(--muted);font:14.5px var(--sans);text-align:right}
 #sugg .sg.on,#sugg .sg:hover{background:#fff;box-shadow:inset 3px 0 0 var(--green)}
 #sugg .sgh{padding:6px 12px;font:600 12.5px var(--sans);color:var(--muted);background:#fff;text-transform:none;letter-spacing:0}
 @media (max-width:640px){#sugg{left:0;right:0;width:auto;max-width:none}}
-mark.hl{background:#cfe9d6;color:#0a2010!important;font-weight:inherit;padding:0 1px;border-radius:2px;box-shadow:0 0 0 1px #cfe9d6;scroll-margin-top:150px}
+mark.sh{background:#8fd9a8;color:#0a2010!important;font-weight:700;padding:1px 3px;border-radius:3px;box-shadow:0 0 0 1px #0a3324;scroll-margin-top:150px}
 .qn{color:var(--mid);font-weight:700;margin-right:8px}
 .qa p{margin:10px 0}
 .qb{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
@@ -1647,10 +1647,10 @@ window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(!id
 $('#sel').addEventListener('change',e=>go(e.target.value));
 const NTC={};function noteTxt(t){if(!t.notes)return '';return NTC[t.id]||(NTC[t.id]=t.notes.map(n=>n.h+' '+n.html.replace(/<[^>]+>/g,' ')).join(' ').replace(/&amp;/g,'&'))}
 function hilite(scroll){const m=document.getElementById('main');if(!m)return;
- m.querySelectorAll('mark.hl').forEach(k=>{k.replaceWith(document.createTextNode(k.textContent))});m.normalize();
+ m.querySelectorAll('mark.sh').forEach(k=>{k.replaceWith(document.createTextNode(k.textContent))});m.normalize();
  if(!filter||filter.length<2||!document.createTreeWalker)return;
  const w=document.createTreeWalker(m,4,{acceptNode:n=>n.nodeValue.toLowerCase().includes(filter)&&!/^(SCRIPT|STYLE|TEXTAREA)$/.test(n.parentNode.tagName)?1:3});const ns=[];let n;while((n=w.nextNode()))ns.push(n);
- let first=null;ns.forEach(n=>{const txt=n.nodeValue,low=txt.toLowerCase();const f=document.createDocumentFragment();let i=0,p;while((p=low.indexOf(filter,i))>=0){if(p>i)f.appendChild(document.createTextNode(txt.slice(i,p)));const k=document.createElement('mark');k.className='hl';k.textContent=txt.slice(p,p+filter.length);f.appendChild(k);if(!first)first=k;i=p+filter.length}if(i<txt.length)f.appendChild(document.createTextNode(txt.slice(i)));n.parentNode.replaceChild(f,n)});
+ let first=null;ns.forEach(n=>{const txt=n.nodeValue,low=txt.toLowerCase();const f=document.createDocumentFragment();let i=0,p;while((p=low.indexOf(filter,i))>=0){if(p>i)f.appendChild(document.createTextNode(txt.slice(i,p)));const k=document.createElement('mark');k.className='sh';k.textContent=txt.slice(p,p+filter.length);f.appendChild(k);if(!first)first=k;i=p+filter.length}if(i<txt.length)f.appendChild(document.createTextNode(txt.slice(i)));n.parentNode.replaceChild(f,n)});
  if(first){let d=first.closest('details');while(d){d.open=true;d=d.parentElement&&d.parentElement.closest('details')}if(scroll)setTimeout(()=>first.scrollIntoView({block:'center',behavior:'smooth'}),60)}}
 let sgItems=[],sgAct=-1;
 const sgEsc=x=>String(x).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
