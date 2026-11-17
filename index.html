@@ -1469,7 +1469,7 @@ const UNB=[['Home','Welcome'],['B1','Introduction'],['B2','Human resources'],['B
 function buildNav(){
   const cur=sectOf(current);
   $('#units').innerHTML=(MODE==='biz'?UNB:UNE).map(x=>{const first=ENTRIES.find(e=>sectOf(e.id)===x[0]);return '<a href="#'+first.id+'" class="'+(x[0]===cur?'on':'')+'"'+(x[0]===cur?' aria-current="true"':'')+'>'+x[1]+'</a>'}).join('');
-  const hit=e=>{if(!filter)return sectOf(e.id)===cur;const t=T.find(x=>x.id===e.id);if(e.id==='glossary'&&GLOSS.some(g=>(g[0]+' '+g[1]).toLowerCase().includes(filter)))return true;if(e.id==='bizterms'&&BIZTERMS.some(g=>(g[0]+' '+g[1]).toLowerCase().includes(filter)))return true;return ((NUM[e.id]||'')+' '+e.title+' '+tv(e.title)+' '+(t?t.what+' '+(t.meaning||''):'')).toLowerCase().includes(filter)};
+  const hit=e=>{if(!filter)return sectOf(e.id)===cur;const t=T.find(x=>x.id===e.id);if(e.id==='glossary'&&GLOSS.some(g=>(g[0]+' '+g[1]).toLowerCase().includes(filter)))return true;if(e.id==='bizterms'&&BIZTERMS.some(g=>(g[0]+' '+g[1]).toLowerCase().includes(filter)))return true;return ((NUM[e.id]||'')+' '+e.title+' '+tv(e.title)+' '+(t?t.what+' '+(t.meaning||'')+' '+noteTxt(t):'')).toLowerCase().includes(filter)};
   const items=ENTRIES.filter(hit);let h='',so='',lastBand=null;
   const ts=T.filter(t=>unitNum(t)===cur);
   if(!filter&&ts.length)h+='<p class="prog">'+ts.filter(t=>studied[t.id]).length+' of '+ts.length+' studied</p>';
@@ -1635,6 +1635,7 @@ function show(id){
 function go(id){if(location.hash==='#'+id)show(id);else location.hash=id}
 window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(!id){show(MODE==='biz'?'bwelcome':'welcome');return}if(/^sec\d+$/.test(id))return;const e=ALLE.find(x=>x.id===id);if(e&&e.m!=='both'&&e.m!==MODE){MODE=e.m;try{localStorage.setItem('econ-mode',MODE)}catch(x){}applyMode()}show(id)});
 $('#sel').addEventListener('change',e=>go(e.target.value));
+const NTC={};function noteTxt(t){if(!t.notes)return '';return NTC[t.id]||(NTC[t.id]=t.notes.map(n=>n.h+' '+n.html.replace(/<[^>]+>/g,' ')).join(' ').replace(/&amp;/g,'&'))}
 function applySearch(val){
   filter=val.trim().toLowerCase();
   buildNav();
