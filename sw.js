@@ -1,4 +1,4 @@
-const CACHE = 'econ-app-v5';
+const CACHE = 'econ-app-v6';
 const ASSETS = ['./', './index.html', './manifest.webmanifest'];
 
 self.addEventListener('install', (e) => {
