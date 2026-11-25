@@ -1,4 +1,4 @@
-const CACHE = 'econ-app-v8';
+const CACHE = 'econ-app-v9';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './assets/ess-slides/manifest.js'];
 
 self.addEventListener('install', (e) => {
