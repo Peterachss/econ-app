@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-motion="live">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Zonation, Kite Diagrams &amp; Succession (IB ESS 2.5 SL)</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./ess-viewer.css">
+</head>
+<body>
+<div class="app">
+  <header class="hd">
+    <div class="hd-l">
+      <span class="hd-badge">Topic 2.5 · SL</span>
+      <h1 class="hd-title">Zonation, Kite Diagrams &amp; Succession</h1>
+    </div>
+    <div class="vtabs" role="tablist">
+      <button type="button" class="on" data-vtab="kite">1. Zonation &amp; Kite Diagram</button>
+      <button type="button" data-vtab="succ">2. Primary vs Secondary Succession</button>
+    </div>
+    <div class="tb">
+      <button type="button" id="btn-theme" aria-pressed="false">Dark</button>
+      <button type="button" id="btn-motion" aria-pressed="true">Live</button>
+      <button type="button" id="btn-export">Export SVG</button>
+    </div>
+  </header>
+
+  <div class="ctrl-bar" data-forview="succ" hidden>
+    <div class="ctrl-grp">
+      <label>Succession Mode:</label>
+      <button type="button" class="ctrl-btn on" data-smode="primary">Primary Succession (Surtsey Lava Rock)</button>
+      <button type="button" class="ctrl-btn" data-smode="secondary">Secondary Succession (Broadbalk Cleared Soil)</button>
+    </div>
+    <span class="ctrl-read" id="succ-read">Starts at 0 cm Bare Rock -> Centuries to Climax (~300+ yr)</span>
+  </div>
+
+  <main class="stage" id="stage">
+    <svg class="esvg" data-view="kite" viewBox="0 0 920 405" role="img" aria-label="ESS 2.5 Spatial Zonation Belt Transect and Symmetrical Kite Diagram across Rocky Shore">
+      <defs>
+        <marker id="ma-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M1,1.5 L8.5,5 L1,8.5 z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+      <g class="vp">
+        <text x="460" y="30" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">Spatial Zonation: Rocky Shore Belt Transect (0 m Splash Zone -> 30 m Low Tide)</text>
+
+        <g data-tip="zon_grad">
+          <line x1="210" y1="264" x2="860" y2="264" stroke="var(--ink)" stroke-width="2"/>
+          <line x1="210" y1="264" x2="210" y2="48" stroke="var(--line)" stroke-width="1.4"/>
+          <line x1="340" y1="264" x2="340" y2="48" stroke="var(--line)" stroke-dasharray="4 4"/>
+          <line x1="470" y1="264" x2="470" y2="48" stroke="var(--line)" stroke-dasharray="4 4"/>
+          <line x1="600" y1="264" x2="600" y2="48" stroke="var(--line)" stroke-dasharray="4 4"/>
+          <line x1="730" y1="264" x2="730" y2="48" stroke="var(--line)" stroke-dasharray="4 4"/>
+          <line x1="860" y1="264" x2="860" y2="48" stroke="var(--line)" stroke-dasharray="4 4"/>
+
+          <text x="210" y="280" text-anchor="middle" font-size="11" font-weight="700" fill="var(--muted)">0 m (High Splash)</text>
+          <text x="340" y="280" text-anchor="middle" font-size="11" fill="var(--muted)">6 m</text>
+          <text x="470" y="280" text-anchor="middle" font-size="11" fill="var(--muted)">12 m (Mid Shore)</text>
+          <text x="600" y="280" text-anchor="middle" font-size="11" fill="var(--muted)">18 m</text>
+          <text x="730" y="280" text-anchor="middle" font-size="11" fill="var(--muted)">24 m</text>
+          <text x="855" y="280" text-anchor="end" font-size="11" font-weight="700" fill="var(--blue)">30 m (Low Tide Sea)</text>
+        </g>
+
+        <g data-tip="k_wrack">
+          <text x="198" y="84" text-anchor="end" font-size="12" font-weight="700" fill="var(--amber)">Channel Wrack</text>
+          <line x1="210" y1="80" x2="860" y2="80" stroke="var(--line)" stroke-width="1"/>
+          <polygon points="210,80 265,64 340,60 405,74 440,80 405,86 340,100 265,96" fill="var(--amber-bg)" stroke="var(--amber)" stroke-width="2"/>
+        </g>
+
+        <g data-tip="k_barn">
+          <text x="198" y="138" text-anchor="end" font-size="12" font-weight="700" fill="var(--ink)">Acorn Barnacle</text>
+          <line x1="210" y1="134" x2="860" y2="134" stroke="var(--line)" stroke-width="1"/>
+          <polygon points="250,134 340,118 470,110 560,116 630,134 560,152 470,158 340,150" fill="var(--warm)" stroke="var(--ink)" stroke-width="2"/>
+        </g>
+
+        <g data-tip="k_blad">
+          <text x="198" y="192" text-anchor="end" font-size="12" font-weight="700" fill="var(--accent)">Bladder Wrack</text>
+          <line x1="210" y1="188" x2="860" y2="188" stroke="var(--line)" stroke-width="1"/>
+          <polygon points="390,188 470,174 585,164 685,174 730,188 685,202 585,212 470,202" fill="var(--green-bg)" stroke="var(--accent)" stroke-width="2"/>
+        </g>
+
+        <g data-tip="k_kelp">
+          <text x="198" y="242" text-anchor="end" font-size="12" font-weight="700" fill="var(--blue)">Kelp (Laminaria)</text>
+          <line x1="210" y1="238" x2="860" y2="238" stroke="var(--line)" stroke-width="1"/>
+          <polygon points="620,238 710,224 795,214 860,214 860,262 795,262 710,252" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2"/>
+        </g>
+
+        <g data-tip="k_scale">
+          <rect x="22" y="294" width="174" height="46" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.8"/>
+          <line x1="34" y1="312" x2="74" y2="312" stroke="var(--accent)" stroke-width="4"/>
+          <text x="82" y="316" font-size="10.8" font-weight="700" fill="var(--ink)">Width = 50% cover</text>
+          <text x="109" y="332" text-anchor="middle" font-size="10" fill="var(--muted)">Symmetrical around axis</text>
+        </g>
+
+        <g data-tip="zon_grad">
+          <rect x="210" y="294" width="650" height="54" rx="8" fill="var(--surface)" stroke="var(--line)" stroke-width="1.6"/>
+          <text x="228" y="310" font-size="10.5" font-weight="700" fill="var(--red)">High Desiccation / Dry Exposure (falls seaward ->)</text>
+          <text x="842" y="310" text-anchor="end" font-size="10.5" font-weight="700" fill="var(--blue)">Sea Immersion &amp; Nutrients (rises ->)</text>
+          <path d="M228,318 L842,340" fill="none" stroke="var(--red)" stroke-width="2.4"/>
+          <path d="M228,340 L842,318" fill="none" stroke="var(--blue)" stroke-width="2.4"/>
+        </g>
+      </g>
+    </svg>
+
+    <svg class="esvg" data-view="succ" viewBox="0 0 920 405" role="img" aria-label="ESS 2.5 Primary vs Secondary Ecological Succession Sere Profile" hidden>
+      <defs>
+        <marker id="ma-sg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M1,1.5 L8.5,5 L1,8.5 z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+      <g class="vp">
+        <text id="succ-title" x="460" y="30" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">Primary Succession (Temporal Change from Bare Rock, e.g. Surtsey Island 1963)</text>
+
+        <g data-tip="s_soil">
+          <polygon points="56,282 864,282 864,248 56,266" fill="var(--warm)" stroke="var(--ink)" stroke-width="1.8"/>
+          <polygon id="soil-poly" points="56,266 218,262 410,254 610,242 864,228 864,248 56,266" fill="var(--amber-bg)" stroke="var(--amber)" stroke-width="1.8"/>
+          <text id="soil-lbl" x="460" y="276" text-anchor="middle" font-size="11" font-weight="700" fill="var(--amber)">Bedrock &amp; Deepening Humus Soil Layer (0 cm -> 35+ cm)</text>
+        </g>
+
+        <g data-tip="s_pioneer">
+          <rect x="44" y="218" width="136" height="44" rx="8" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.8"/>
+          <text id="pio-t" x="112" y="210" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">1. Bare Rock &amp; Lichens</text>
+          <text id="pio-s" x="112" y="235" text-anchor="middle" font-size="10.5" fill="var(--muted)">Pioneer colonizers</text>
+          <circle cx="88" cy="249" r="5" fill="var(--amber)" opacity="0.8"/>
+          <circle cx="112" cy="249" r="6" fill="var(--accent2)" opacity="0.8"/>
+          <circle cx="136" cy="249" r="5" fill="var(--amber)" opacity="0.7"/>
+        </g>
+
+        <g data-tip="s_herb">
+          <path d="M236,260 L236,220 M246,260 L252,216 M258,260 L262,224 M270,260 L276,214" stroke="var(--accent2)" stroke-width="3" stroke-linecap="round"/>
+          <text x="256" y="202" text-anchor="middle" font-size="12" font-weight="700" fill="var(--accent2)">2. Grasses &amp; Herbs</text>
+          <text x="256" y="299" text-anchor="middle" font-size="10.5" fill="var(--muted)">Roots bind thin soil</text>
+        </g>
+
+        <g data-tip="s_shrub">
+          <circle cx="424" cy="212" r="24" fill="var(--green-bg)" stroke="var(--accent2)" stroke-width="2"/>
+          <circle cx="448" cy="204" r="28" fill="var(--green-bg)" stroke="var(--accent)" stroke-width="2"/>
+          <line x1="436" y1="254" x2="436" y2="216" stroke="var(--amber)" stroke-width="4"/>
+          <text x="436" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="var(--accent)">3. Shrubs &amp; Young Pines</text>
+          <text x="436" y="299" text-anchor="middle" font-size="10.5" fill="var(--muted)">Outcompetes sun grasses</text>
+        </g>
+
+        <g data-tip="s_int">
+          <polygon points="576,226 604,132 632,226" fill="var(--green-bg)" stroke="var(--accent)" stroke-width="2"/>
+          <line x1="604" y1="242" x2="604" y2="226" stroke="var(--amber)" stroke-width="5"/>
+          <text x="604" y="122" text-anchor="middle" font-size="12" font-weight="700" fill="var(--accent)">4. Pioneer Woodland</text>
+        </g>
+
+        <g data-tip="s_climax">
+          <circle cx="760" cy="144" r="44" fill="var(--green-bg)" stroke="var(--accent)" stroke-width="2.6"/>
+          <circle cx="806" cy="156" r="38" fill="var(--green-bg)" stroke="var(--accent)" stroke-width="2.6"/>
+          <circle cx="732" cy="166" r="32" fill="var(--green-bg)" stroke="var(--accent2)" stroke-width="2.2"/>
+          <line x1="772" y1="232" x2="772" y2="168" stroke="var(--amber)" stroke-width="7"/>
+          <text x="772" y="90" text-anchor="middle" font-size="13.5" font-weight="800" fill="var(--accent)">5. Climax Woodland</text>
+          <text x="772" y="299" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--accent)">Steady-state dynamic equilibrium</text>
+        </g>
+
+        <g data-tip="s_trends">
+          <path class="flow-anim" d="M68,314 L852,314" fill="none" stroke="var(--accent)" stroke-width="2.6" marker-end="url(#ma-sg)"/>
+          <rect x="68" y="324" width="796" height="32" rx="8" fill="var(--surface)" stroke="var(--line)" stroke-width="1.5"/>
+          <text x="466" y="344" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--ink)">Trends: Soil Depth (+) · Total Biomass (+) · Biodiversity &amp; Food Webs (+) · Microclimate Stability (+)</text>
+        </g>
+      </g>
+    </svg>
+
+    <div class="legend">
+      <span class="leg-i"><span class="leg-sw" style="background:var(--accent)"></span>Community abundance / sere</span>
+      <span class="leg-i"><span class="leg-sw" style="background:var(--amber)"></span>Soil &amp; dry exposure</span>
+      <span class="leg-i"><span class="leg-sw" style="background:var(--blue)"></span>Marine moisture gradient</span>
+    </div>
+
+    <div class="zoom-bar">
+      <button type="button" id="z-out" aria-label="Zoom out">-</button>
+      <span id="z-lbl">100%</span>
+      <button type="button" id="z-in" aria-label="Zoom in">+</button>
+      <button type="button" id="z-fit">Fit</button>
+    </div>
+  </main>
+
+  <footer class="insp" id="insp" aria-live="polite"></footer>
+</div>
+
+<script src="./ess-viewer.js"></script>
+<script>
+(function () {
+  var btns = document.querySelectorAll('[data-smode]');
+  var succTitle = document.getElementById('succ-title');
+  var soilPoly = document.getElementById('soil-poly');
+  var soilLbl = document.getElementById('soil-lbl');
+  var pioT = document.getElementById('pio-t');
+  var pioS = document.getElementById('pio-s');
+  var succRead = document.getElementById('succ-read');
+
+  function setMode(m) {
+    btns.forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-smode') === m); });
+    if (m === 'secondary') {
+      succTitle.textContent = 'Secondary Succession (Faster Recovery on Pre-Existing Soil, e.g. Broadbalk Field 1882)';
+      soilPoly.setAttribute('points', '56,246 218,244 410,240 610,234 864,228 864,254 56,254');
+      soilLbl.textContent = 'Intact Topsoil + Soil Seed Bank Ready at Day 1 (18 cm -> 35+ cm)';
+      pioT.textContent = '1. Cleared Soil & Annual Weeds';
+      pioS.textContent = 'Seeds sprout in Year 1';
+      succRead.textContent = 'Starts with fertile soil + seed bank -> Climax Woodland in ~100-150 yr (faster)';
+    } else {
+      succTitle.textContent = 'Primary Succession (Temporal Change from Bare Rock, e.g. Surtsey Island 1963)';
+      soilPoly.setAttribute('points', '56,266 218,262 410,254 610,242 864,228 864,248 56,266');
+      soilLbl.textContent = 'Bedrock & Deepening Humus Soil Layer (0 cm -> 35+ cm)';
+      pioT.textContent = '1. Bare Rock & Lichens';
+      pioS.textContent = 'Pioneer colonizers';
+      succRead.textContent = 'Starts at 0 cm Bare Rock -> Centuries to Climax (~300+ yr)';
+    }
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { setMode(b.getAttribute('data-smode')); });
+  });
+
+  window.initEssDiagram({
+    slug: 'zonation-succession',
+    defaultView: 'kite',
+    defaultTip: 'k_blad',
+    viewDefaults: { kite: 'k_blad', succ: 's_pioneer' },
+    tips: {
+      zon_grad: {
+        code: 'Spatial Change',
+        title: 'Environmental Gradient & Zonation',
+        body: 'Zonation is the spatial change in community composition across space along an abiotic gradient (tide exposure, salinity, altitude, or light), unlike succession which happens over time.',
+        exam: 'Contrast ZONATION (across space today) vs SUCCESSION (at one place over time).'
+      },
+      k_wrack: {
+        code: 'Upper Shore',
+        title: 'Channelled Wrack (Desiccation-Tolerant)',
+        body: 'Dominates 0-12 m splash zone because it survives drying out at low tide and avoids competition from larger seaweeds lower down.',
+        exam: 'Upper limit set by abiotic drought stress; lower limit often set by interspecific competition.'
+      },
+      k_barn: {
+        code: 'Mid-High Zone',
+        title: 'Acorn Barnacles',
+        body: 'Cement tightly to rock and shut calcareous plates to trap seawater during low tide. Widest kite bulge sits at 10-16 m.',
+        exam: 'Read peak abundance directly from the widest vertical thickness on the kite axis.'
+      },
+      k_blad: {
+        code: 'Mid-Low Zone',
+        title: 'Bladder Wrack (Fucus vesiculosus)',
+        body: 'Gas bladders lift fronds into sunlight when submerged at mid-to-low tide (12-24 m). Optimal abiotic balance yields peak percentage cover near 18 m.',
+        exam: 'Always report kite width from BOTH sides of the midline added together.'
+      },
+      k_kelp: {
+        code: 'Sublittoral',
+        title: 'Kelp (Laminaria)',
+        body: 'Requires continuous immersion (22-30 m) and outcompetes upper-shore algae in deep water due to huge light-capturing blades.',
+        exam: 'Notice overlap zones where abiotic tolerance overlaps and competition shifts dominance.'
+      },
+      k_scale: {
+        code: 'Paper 1 Skill',
+        title: 'Reading Symmetrical Kite Scales',
+        body: 'Each kite plots species abundance BOTH above and below the horizontal centerline (total thickness = abundance value at that transect distance).',
+        exam: 'Check the scale bar (e.g. 10 mm = 20% cover) before quoting numbers in Paper 1.'
+      },
+      s_soil: {
+        code: 'Abiotic Change',
+        title: 'Soil Formation & Moisture Retention',
+        body: 'Pioneers trap windblown dust and add organic humus upon death, thickening soil depth so water and mineral ions build up for larger plants.',
+        exam: 'Explain how living pioneers actively modify abiotic conditions to enable later seral stages.'
+      },
+      s_pioneer: {
+        code: 'Stage 1',
+        title: 'Pioneer Community (Lichens / Annual Weeds)',
+        body: 'Wind-dispersed spores colonize harsh rock (Primary) or fast-growing weeds sprout from intact soil (Secondary). Pioneers weather rock with weak acids.',
+        exam: 'Compare Primary (starts with NO soil, Surtsey) vs Secondary (soil + seed bank present, Broadbalk).'
+      },
+      s_herb: {
+        code: 'Stage 2',
+        title: 'Grasses & Herbaceous Stage',
+        body: 'Shallow fibrous roots stabilize new soil, retain rainfall, and shade out low lichens.',
+        exam: 'Note NPP rises sharply as photosynthetic leaf area increases.'
+      },
+      s_shrub: {
+        code: 'Stage 3',
+        title: 'Shrub & Early Sapling Stage',
+        body: 'Woody shrubs cast shade across grasses, buffering ground temperature and humidity (rising microclimate stability).',
+        exam: 'Habitat and niche diversity expand rapidly once vertical vegetation layers appear.'
+      },
+      s_int: {
+        code: 'Stage 4',
+        title: 'Intermediate Forest Stage',
+        body: 'Fast-growing pioneer trees create full canopy shade until slower shade-tolerant hardwoods grow beneath them.',
+        exam: 'Productivity vs Respiration ratio shifts closer to P/R = 1 near maturity.'
+      },
+      s_climax: {
+        code: 'Stage 5',
+        title: 'Climax Community (Steady State)',
+        body: 'Complex food webs, highest standing biomass, and balanced GPP ≈ R keep the community in dynamic steady-state equilibrium unless disturbed.',
+        exam: 'Stay strictly with SL terms: complex food webs, deep humus, stable microclimate, P/R ≈ 1.'
+      },
+      s_trends: {
+        code: '2.5.4 Trends',
+        title: 'Directional Trends Along Succession',
+        body: 'As a sere progresses from pioneer to climax: soil depth increases, gross & net standing biomass increase, food webs diversify, and environmental extremes are buffered.',
+        exam: 'Use these four trends to justify higher ecosystem stability and resilience in later stages.'
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>

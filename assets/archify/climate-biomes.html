@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-motion="live">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tricellular Circulation, Climate &amp; Biomes (IB ESS 2.4 SL)</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./ess-viewer.css">
+</head>
+<body>
+<div class="app">
+  <header class="hd">
+    <div class="hd-l">
+      <span class="hd-badge">Topic 2.4 · SL</span>
+      <h1 class="hd-title">Tricellular Model, Climate &amp; Biomes</h1>
+    </div>
+    <div class="vtabs" role="tablist">
+      <button type="button" class="on" data-vtab="tri">1. Tricellular Circulation</button>
+      <button type="button" data-vtab="whit">2. Whittaker Biome Plot</button>
+    </div>
+    <div class="tb">
+      <button type="button" id="btn-theme" aria-pressed="false">Dark</button>
+      <button type="button" id="btn-motion" aria-pressed="true">Live</button>
+      <button type="button" id="btn-export">Export SVG</button>
+    </div>
+  </header>
+
+  <div class="ctrl-bar" data-forview="tri">
+    <div class="ctrl-grp">
+      <label for="warm-rng">Global Warming Scenario:</label>
+      <input type="range" id="warm-rng" min="0" max="3" step="0.5" value="0">
+      <output id="warm-out">+0.0 °C</output>
+    </div>
+    <span class="ctrl-read" id="tri-read">Baseline Biomes (L at 0° &amp; 60° = Wet | H at 30° &amp; 90° = Dry)</span>
+  </div>
+
+  <main class="stage" id="stage">
+    <svg class="esvg" data-view="tri" viewBox="0 0 920 405" role="img" aria-label="ESS 2.4 Tricellular Atmospheric Circulation Hadley Ferrel Polar Cells and Biome Belts">
+      <defs>
+        <marker id="ma-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M1,1.5 L8.5,5 L1,8.5 z" fill="var(--red)"/>
+        </marker>
+        <marker id="ma-b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M1,1.5 L8.5,5 L1,8.5 z" fill="var(--blue)"/>
+        </marker>
+        <marker id="ma-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M1,1.5 L8.5,5 L1,8.5 z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+      <g class="vp">
+        <text x="460" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">Tricellular Model: Differential Solar Heating Drives Rainfall &amp; Deserts (0° -> 90° N/S)</text>
+
+        <path d="M90,294 Q460,234 830,294 L830,336 L90,336 Z" fill="var(--warm)" stroke="var(--ink)" stroke-width="2.2"/>
+
+        <g id="belt-grp">
+          <path d="M90,294 Q155,282 220,275 L220,296 Q155,303 90,314 Z" fill="var(--accent)" opacity="0.88" data-tip="b_trf"/>
+          <path d="M220,275 Q335,264 450,264 L450,285 Q335,285 220,296 Z" fill="var(--amber)" opacity="0.85" data-tip="b_des"/>
+          <path d="M450,264 Q565,264 680,275 L680,296 Q565,285 450,285 Z" fill="var(--accent2)" opacity="0.85" data-tip="b_temp"/>
+          <path d="M680,275 Q755,282 830,294 L830,314 Q755,303 680,296 Z" fill="var(--blue)" opacity="0.72" data-tip="b_tun"/>
+        </g>
+
+        <g data-tip="hadley">
+          <path class="flow-anim" d="M124,258 C118,120 164,74 236,74 C308,74 352,120 344,234" fill="none" stroke="var(--red)" stroke-width="3" marker-end="url(#ma-b)"/>
+          <path class="flow-anim" d="M326,242 L144,262" fill="none" stroke="var(--red)" stroke-width="2.6" marker-end="url(#ma-r)"/>
+          <circle cx="236" cy="152" r="35" fill="var(--surface)" stroke="var(--red)" stroke-width="1.8" stroke-dasharray="4 3"/>
+          <text x="236" y="148" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--red)">Hadley Cell</text>
+          <text x="236" y="164" text-anchor="middle" font-size="10.5" fill="var(--muted)">0° to 30°</text>
+          <text x="236" y="232" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--red)">NE / SE Trade Winds</text>
+        </g>
+
+        <g data-tip="ferrel">
+          <path class="flow-anim" d="M582,240 C588,116 534,78 468,78 C404,78 364,118 368,234" fill="none" stroke="var(--accent)" stroke-width="3" marker-end="url(#ma-b)"/>
+          <path class="flow-anim" d="M388,236 L564,240" fill="none" stroke="var(--accent)" stroke-width="2.6" marker-end="url(#ma-g)"/>
+          <circle cx="474" cy="150" r="35" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.8" stroke-dasharray="4 3"/>
+          <text x="474" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent)">Ferrel Cell</text>
+          <text x="474" y="162" text-anchor="middle" font-size="10.5" fill="var(--muted)">30° to 60°</text>
+          <text x="474" y="222" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--accent)">Westerlies -></text>
+        </g>
+
+        <g data-tip="polar">
+          <path class="flow-anim" d="M604,240 C610,128 654,94 712,94 C770,94 806,136 800,256" fill="none" stroke="var(--blue)" stroke-width="3" marker-end="url(#ma-b)"/>
+          <path class="flow-anim" d="M784,262 L624,244" fill="none" stroke="var(--blue)" stroke-width="2.6" marker-end="url(#ma-b)"/>
+          <circle cx="708" cy="166" r="34" fill="var(--surface)" stroke="var(--blue)" stroke-width="1.8" stroke-dasharray="4 3"/>
+          <text x="708" y="162" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--blue)">Polar Cell</text>
+          <text x="708" y="178" text-anchor="middle" font-size="10.5" fill="var(--muted)">60° to 90°</text>
+          <text x="708" y="236" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--blue)">Polar Easterlies</text>
+        </g>
+
+        <g data-tip="b_trf">
+          <circle cx="116" cy="256" r="13" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2"/>
+          <text x="116" y="260" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--blue)">L</text>
+          <text x="134" y="326" text-anchor="middle" font-size="11.2" font-weight="700" fill="var(--ink)">0° Equator · Rainforest</text>
+        </g>
+        <g data-tip="b_des">
+          <circle cx="356" cy="242" r="13" fill="var(--amber-bg)" stroke="var(--amber)" stroke-width="2"/>
+          <text x="356" y="246" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--amber)">H</text>
+          <text x="348" y="326" text-anchor="middle" font-size="11.2" font-weight="700" fill="var(--ink)">30° Subtropics · Hot Deserts</text>
+        </g>
+        <g data-tip="b_temp">
+          <circle cx="584" cy="242" r="13" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2"/>
+          <text x="584" y="246" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--blue)">L</text>
+          <text x="582" y="326" text-anchor="middle" font-size="11.2" font-weight="700" fill="var(--ink)">60° Temperate / Boreal Forest</text>
+        </g>
+        <g data-tip="b_tun">
+          <circle cx="802" cy="256" r="13" fill="var(--amber-bg)" stroke="var(--blue)" stroke-width="2"/>
+          <text x="802" y="260" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--blue)">H</text>
+          <text x="786" y="326" text-anchor="middle" font-size="11.2" font-weight="700" fill="var(--ink)">90° Poles · Tundra / Ice</text>
+        </g>
+
+        <text id="shift-note" x="460" y="352" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--red)"></text>
+      </g>
+    </svg>
+
+    <svg class="esvg" data-view="whit" viewBox="0 0 920 405" role="img" aria-label="ESS 2.4 Whittaker Biome Plot Temperature vs Annual Precipitation" hidden>
+      <g class="vp">
+        <text x="480" y="30" text-anchor="middle" font-size="14.5" font-weight="700" fill="var(--ink)">Whittaker Biome Plot: Climate (Temperature + Precipitation) Determines Biome Distribution</text>
+
+        <line x1="120" y1="54" x2="120" y2="318" stroke="var(--ink)" stroke-width="2"/>
+        <line x1="120" y1="318" x2="840" y2="318" stroke="var(--ink)" stroke-width="2"/>
+
+        <text x="48" y="186" text-anchor="middle" transform="rotate(-90 48 186)" font-size="12.5" font-weight="700" fill="var(--blue)">Mean Annual Precipitation (cm/yr)</text>
+        <text x="110" y="318" text-anchor="end" font-size="11" fill="var(--muted)">0</text>
+        <text x="110" y="256" text-anchor="end" font-size="11" fill="var(--muted)">100</text>
+        <text x="110" y="194" text-anchor="end" font-size="11" fill="var(--muted)">200</text>
+        <text x="110" y="132" text-anchor="end" font-size="11" fill="var(--muted)">300</text>
+        <text x="110" y="70" text-anchor="end" font-size="11" fill="var(--muted)">400</text>
+
+        <text x="480" y="354" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--red)">Mean Annual Temperature (°C)</text>
+        <text x="140" y="336" text-anchor="middle" font-size="11" fill="var(--muted)">-15°C</text>
+        <text x="295" y="336" text-anchor="middle" font-size="11" fill="var(--muted)">-5°C</text>
+        <text x="450" y="336" text-anchor="middle" font-size="11" fill="var(--muted)">+5°C</text>
+        <text x="605" y="336" text-anchor="middle" font-size="11" fill="var(--muted)">+15°C</text>
+        <text x="760" y="336" text-anchor="middle" font-size="11" fill="var(--muted)">+25°C</text>
+        <text x="835" y="336" text-anchor="middle" font-size="11" fill="var(--muted)">+30°C</text>
+
+        <g data-tip="b_tun">
+          <path d="M126,282 Q165,244 260,256 Q290,276 285,314 L126,314 Z" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2"/>
+          <text x="206" y="294" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--blue)">Tundra</text>
+        </g>
+
+        <g data-tip="b_boreal">
+          <path d="M262,254 Q300,192 430,204 Q446,238 424,264 L288,268 Z" fill="var(--warm)" stroke="var(--accent2)" stroke-width="2"/>
+          <text x="358" y="238" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent)">Boreal / Taiga</text>
+        </g>
+
+        <g data-tip="b_temp">
+          <path d="M432,202 Q475,142 622,162 Q646,210 612,248 L434,250 Z" fill="var(--green-bg)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="534" y="206" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent)">Temperate Forest</text>
+        </g>
+
+        <g data-tip="b_grass">
+          <path d="M424,252 L614,250 Q734,236 742,272 L676,294 L424,294 Z" fill="var(--amber-bg)" fill-opacity="0.72" stroke="var(--amber)" stroke-width="2"/>
+          <text x="580" y="278" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--amber)">Grassland / Savanna</text>
+        </g>
+
+        <g data-tip="b_des">
+          <path d="M676,294 L742,272 L836,274 L836,314 L676,314 Z" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2"/>
+          <text x="768" y="300" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--red)">Hot Desert</text>
+        </g>
+
+        <g data-tip="b_trf">
+          <path d="M620,160 Q658,64 786,60 Q836,80 834,196 L650,218 Z" fill="var(--green-bg)" stroke="var(--accent)" stroke-width="2.6"/>
+          <text x="738" y="138" text-anchor="middle" font-size="13.5" font-weight="800" fill="var(--accent)">Tropical Rainforest</text>
+          <text x="738" y="156" text-anchor="middle" font-size="11" fill="var(--ink)">Highest NPP &amp; Biodiversity</text>
+        </g>
+
+        <text x="150" y="92" font-size="11.5" font-weight="700" fill="var(--muted)">Note: Warming shifts biomes poleward or upslope as climate zones move.</text>
+      </g>
+    </svg>
+
+    <div class="legend">
+      <span class="leg-i"><span class="leg-sw" style="background:var(--red)"></span>Warm rising air (L: Rain)</span>
+      <span class="leg-i"><span class="leg-sw" style="background:var(--blue)"></span>Cool sinking air (H: Dry)</span>
+      <span class="leg-i"><span class="leg-sw" style="background:var(--accent)"></span>Biotic productivity zone</span>
+    </div>
+
+    <div class="zoom-bar">
+      <button type="button" id="z-out" aria-label="Zoom out">-</button>
+      <span id="z-lbl">100%</span>
+      <button type="button" id="z-in" aria-label="Zoom in">+</button>
+      <button type="button" id="z-fit">Fit</button>
+    </div>
+  </main>
+
+  <footer class="insp" id="insp" aria-live="polite"></footer>
+</div>
+
+<script src="./ess-viewer.js"></script>
+<script>
+(function () {
+  var wRng = document.getElementById('warm-rng');
+  var wOut = document.getElementById('warm-out');
+  var beltGrp = document.getElementById('belt-grp');
+  var shiftNote = document.getElementById('shift-note');
+  var triRead = document.getElementById('tri-read');
+
+  function updateWarm() {
+    var dC = Number(wRng.value);
+    wOut.textContent = '+' + dC.toFixed(1) + ' °C';
+    var px = Math.round(dC * 16);
+    beltGrp.setAttribute('transform', 'translate(' + px + ',0)');
+    if (dC === 0) {
+      shiftNote.textContent = '';
+      triRead.textContent = 'Baseline Biomes (L at 0° & 60° = Wet | H at 30° & 90° = Dry)';
+    } else {
+      var km = Math.round(dC * 150);
+      shiftNote.textContent = 'Climate warming +' + dC.toFixed(1) + ' °C pushes biomes ~' + km + ' km poleward (Hadley cell widens)';
+      triRead.textContent = 'Biome Shift: ~' + km + ' km poleward (+' + dC.toFixed(1) + ' °C warming)';
+    }
+  }
+  wRng.addEventListener('input', updateWarm);
+
+  window.initEssDiagram({
+    slug: 'climate-biomes',
+    defaultView: 'tri',
+    defaultTip: 'hadley',
+    viewDefaults: { tri: 'hadley', whit: 'b_trf' },
+    tips: {
+      hadley: {
+        code: '0° - 30°',
+        title: 'Hadley Cell (Thermal Loop)',
+        body: 'Intense solar heating at the Equator lifts warm moist air -> cools & rains heavily (Tropical Rainforest, L). Dry air moves poleward aloft and sinks near 30° N/S, warming adiabatically to create Hot Deserts (H).',
+        exam: 'Always connect RISING air -> cooling -> condensation -> rain (L) vs SINKING air -> warming -> dry (H).'
+      },
+      ferrel: {
+        code: '30° - 60°',
+        title: 'Ferrel Cell (Thermally Indirect)',
+        body: 'Driven between Hadley and Polar cells. Surface Westerlies carry warm moist ocean air toward 60° N/S, rising along the Polar Front to nourish Temperate Forests.',
+        exam: 'Know surface winds bend right in the Northern Hemisphere due to Earth rotation (Coriolis).'
+      },
+      polar: {
+        code: '60° - 90°',
+        title: 'Polar Cell',
+        body: 'Bitterly cold dense air sinks at 90° poles (High Pressure Polar Desert) and flows toward 60° where it meets Ferrel air and rises.',
+        exam: 'Even Antarctica is technically a cold desert because precipitation stays below 250 mm/yr.'
+      },
+      b_trf: {
+        code: '0° Equator',
+        title: 'Tropical Rainforest',
+        body: '25-30 °C year-round, >200 cm/yr rain, no cold season. Steep vertical stratification and highest terrestrial NPP and biodiversity.',
+        exam: 'Most nutrients sit in living biomass, NOT soil, so deforestation rapidly leaves infertile laterite.'
+      },
+      b_des: {
+        code: '30° N/S',
+        title: 'Hot Desert',
+        body: 'Located under descending dry limbs of Hadley cells (<25 cm/yr rain). Sparse drought-adapted xerophytes and very low NPP.',
+        exam: 'Explain desert distribution at ~30° latitude directly from Hadley sinking high pressure.'
+      },
+      b_temp: {
+        code: '45° - 60°',
+        title: 'Temperate Forest',
+        body: 'Distinct warm summers and cool winters with moderate rainfall (75-150 cm/yr). Broadleaf deciduous trees shed leaves in winter; rich brown soil stores organic humus.',
+        exam: 'Intermediate NPP with marked seasonal leaf fall rebuilding fertile soil.'
+      },
+      b_boreal: {
+        code: '55° - 65°',
+        title: 'Boreal Forest (Taiga)',
+        body: 'Long cold winters, acidic podzol soils, conifer needles resist frost and water loss. Holds vast carbon in peatlands and permafrost edges.',
+        exam: 'Contrast acidic needle litter decomposition vs fertile temperate deciduous humus.'
+      },
+      b_grass: {
+        code: 'Savanna / Steppe',
+        title: 'Grasslands (Tropical Savanna & Temperate Steppe)',
+        body: 'Seasonal drought and occasional wildfires suppress dense trees while deep fibrous grass roots lock organic carbon underground.',
+        exam: 'Too dry for closed canopy forest, too wet for desert; grazed by large herbivores.'
+      },
+      b_tun: {
+        code: '65° - 90°',
+        title: 'Tundra (Arctic & Alpine)',
+        body: 'Low insolation, permafrost permanently frozen below a thin summer active layer, low shrubs/moss/lichens, shortest growing season and fragile slow recovery.',
+        exam: 'Note that climate warming shifts tundra upslope or shrinks it as boreal trees migrate north.'
+      }
+    }
+  });
+  updateWarm();
+})();
+</script>
+</body>
+</html>
