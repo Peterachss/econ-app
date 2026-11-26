@@ -368,6 +368,31 @@ h1,h2,h3{text-wrap:balance}
 .eq-next{font-weight:700}
 #eq-stats{margin:6px 0 14px}
 /*EQ-CSS-END*/
+/*PIC-CSS-START*/
+.pk{margin:0 0 28px}
+.pk-tabs{display:flex;gap:4px 26px;margin:0 0 10px}
+.pk-tabs button{background:none;border:0;border-radius:0;padding:8px 0;font:600 15.5px var(--sans);color:var(--muted);border-bottom:3px solid transparent;cursor:pointer}
+.pk-tabs button.on{color:var(--green);border-bottom-color:var(--green)}
+@media (hover:hover) and (pointer:fine){.pk-tabs button:not(.on):hover{color:var(--green)}}
+.pk-cap{margin:0 0 10px;font:17px/1.5 var(--serif);color:var(--ink)}
+.pk-scroll{background:#f6f7f4;overflow-x:auto;padding:8px 6px}
+.pk svg{display:block;width:100%;min-width:620px;height:auto;max-width:none!important;font-family:var(--sans)}
+.pk .pi{cursor:pointer}
+.pk .pi-bg{fill:#fff;stroke:#d5ded8;stroke-width:2;transition:stroke 140ms ease,stroke-width 140ms ease}
+.pk .pi.sel .pi-bg{stroke:#0a3324;stroke-width:4}
+@media (hover:hover) and (pointer:fine){.pk .pi:hover .pi-bg{stroke:#1f6b49;stroke-width:3}}
+.pk .pi:focus{outline:none}.pk .pi:focus-visible .pi-bg{stroke:#2a8f60;stroke-width:5}
+.pk .pi-t{font:700 17px var(--sans);fill:#0a2010}
+.pk .pk-al{font:600 15px var(--sans);fill:#0a2010;paint-order:stroke;stroke:#f6f7f4;stroke-width:6px;stroke-linejoin:round}
+.pk .pk-note{font:600 14.5px var(--sans);fill:#56615b}
+.pk .pk-ring{font:700 19px var(--serif);fill:#0a2010}
+.pk .pk-head{font:700 19px var(--serif);fill:#0a3324}
+.pk .pk-formula{font:700 25px var(--serif);fill:#0a3324}
+.pk-info{padding:14px 2px 4px}
+.pk-info h4{margin:0 0 6px;font:700 22px/1.25 var(--serif);color:var(--green)}
+.pk-info p{margin:0;font:17px/1.6 var(--sans);color:var(--ink);max-width:70ch}
+.pk-hint{margin:10px 0 0;font:14px/1.5 var(--sans);color:var(--muted)}
+/*PIC-CSS-END*/
 </style>
 
 </head><body><a class="skip" href="#main" onclick="document.getElementById('main').focus();return false">Skip to content</a>
@@ -1822,7 +1847,7 @@ if(document.addEventListener){
   if(t.closest('[data-ccfull]')){if(document.fullscreenElement)document.exitFullscreen();else if(box.requestFullscreen)box.requestFullscreen();return}
   const n=t.closest('[data-cc]');if(n)ccGo(box,null,n.getAttribute('data-cc'))});
  document.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const n=e.target.closest&&e.target.closest('.cc [data-cc]');if(n){e.preventDefault();ccGo(n.closest('.cc'),null,n.getAttribute('data-cc'))}})}
-function diagDeckHTML(tid,embedArch=true){const slides=ESSDIAGS[tid]||[];const ad=ESSARCH[tid];if(!slides.length&&!ad)return '';const arch=(typeof ESSNATIVE!=='undefined'&&ESSNATIVE[tid])?ESSNATIVE[tid](embedArch):ad?(embedArch?'<div class="arch-wrap"><div class="arch-bar"><b>Interactive ESS symbol diagram · '+escH(ad[0])+'</b><a href="'+escH(ad[1])+'" target="_blank" rel="noopener noreferrer">Open full screen</a></div><iframe src="'+escH(ad[1])+'" title="'+escH(ad[0])+' (Interactive ESS diagram)" loading="lazy"></iframe></div>':'<div class="arch-wrap"><div class="arch-bar" style="border-bottom:0"><b>Interactive ESS symbol diagram · '+escH(ad[0])+'</b><a href="'+escH(ad[1])+'" target="_blank" rel="noopener noreferrer">Open interactive map</a></div></div>'):'';const deck=slides.length?'<div class="idiag" data-tid="'+tid+'" data-si="0" data-pi="0"><div class="idiag-tabs" role="tablist">'+slides.map((s,i)=>'<button type="button" class="'+(i===0?'on':'')+'" data-dslide="'+i+'">'+escH(s.label)+'</button>').join('')+'</div><div class="idiag-body">'+renderDiagBody(tid,0,0)+'</div></div>':'';
+function diagDeckHTML(tid,embedArch=true){const slides=ESSDIAGS[tid]||[];const ad=ESSARCH[tid];if(!slides.length&&!ad)return '';const arch=(typeof ESSNATIVE!=='undefined'&&ESSNATIVE[tid])?picWrap(tid,ESSNATIVE[tid],embedArch):ad?(embedArch?'<div class="arch-wrap"><div class="arch-bar"><b>Interactive ESS symbol diagram · '+escH(ad[0])+'</b><a href="'+escH(ad[1])+'" target="_blank" rel="noopener noreferrer">Open full screen</a></div><iframe src="'+escH(ad[1])+'" title="'+escH(ad[0])+' (Interactive ESS diagram)" loading="lazy"></iframe></div>':'<div class="arch-wrap"><div class="arch-bar" style="border-bottom:0"><b>Interactive ESS symbol diagram · '+escH(ad[0])+'</b><a href="'+escH(ad[1])+'" target="_blank" rel="noopener noreferrer">Open interactive map</a></div></div>'):'';const deck=slides.length?'<div class="idiag" data-tid="'+tid+'" data-si="0" data-pi="0"><div class="idiag-tabs" role="tablist">'+slides.map((s,i)=>'<button type="button" class="'+(i===0?'on':'')+'" data-dslide="'+i+'">'+escH(s.label)+'</button>').join('')+'</div><div class="idiag-body">'+renderDiagBody(tid,0,0)+'</div></div>':'';
 return '<section class="diag-sec"><h3>Interactive '+(slides.length?'ESS &amp; slide diagrams':'ESS symbol diagram')+'</h3>'+arch+deck+'</section>'}
 function updateDiag(box,si,pi){const tid=box.getAttribute('data-tid');const slides=ESSDIAGS[tid];if(!slides)return;si=(si+slides.length)%slides.length;const pins=slides[si].pins||[];pi=(pi+pins.length)%Math.max(1,pins.length);box.setAttribute('data-si',si);box.setAttribute('data-pi',pi);box.classList.remove('pins-off');box.querySelectorAll('[data-dslide]').forEach((b,i)=>b.classList.toggle('on',i===si));box.querySelector('.idiag-body').innerHTML=renderDiagBody(tid,si,pi);const pm=slides[si].src.match(/_p(\d+)\./);if(pm&&typeof syncSideQuiz==='function')syncSideQuiz(tid,+pm[1]);}
 function openZoom(src,cap){let lb=document.getElementById('d-lb');if(!lb){lb=document.createElement('div');lb.id='d-lb';lb.className='dlb';lb.innerHTML='<div class="dlb-in"><button type="button" class="dlb-x" aria-label="Close">Close</button><img id="dlb-img" alt=""><p id="dlb-cap"></p></div>';document.body.appendChild(lb);lb.addEventListener('click',e=>{if(e.target===lb||e.target.closest('.dlb-x'))lb.hidden=true});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden)lb.hidden=true})}document.getElementById('dlb-img').src=src;document.getElementById('dlb-cap').textContent=cap||'';lb.hidden=false;}
@@ -1952,6 +1977,193 @@ if(document.addEventListener){
   if(/^[1-9]$/.test(e.key)&&!c.rec&&!c.done&&+e.key<=c.opts.length){c.pick=+e.key-1;eqResult(c.pick===c.a);e.preventDefault();return}
   if((e.key==='n'||e.key==='N')&&c.done){eqNext();e.preventDefault()}})}
 /*EQ-END*/
+/*PIC-START*/
+/* ---- Picture view: large, simple symbols for each ESS diagram ---- */
+const PKI={
+ sun:'<circle cx="32" cy="32" r="11" fill="#cfe3d5"/><path d="M32 6v8M32 50v8M6 32h8M50 32h8M13.6 13.6l5.7 5.7M44.7 44.7l5.7 5.7M13.6 50.4l5.7-5.7M44.7 19.3l5.7-5.7"/>',
+ cloud:'<path d="M17 46a10 10 0 0 1 1-19.5 14 14 0 0 1 27 3.5 8.5 8.5 0 0 1-1 16z" fill="#e9f1ec"/>',
+ tree:'<rect x="29" y="38" width="6" height="18" fill="#1f6b49"/><circle cx="32" cy="24" r="16" fill="#cfe3d5"/><circle cx="22" cy="31" r="9" fill="#cfe3d5"/><circle cx="42" cy="31" r="9" fill="#cfe3d5"/>',
+ sprout:'<path d="M32 56V30"/><path d="M32 38C20 38 14 30 14 20c10 0 18 6 18 18z" fill="#cfe3d5"/><path d="M32 32c0-9 6-16 18-16 0 10-6 16-18 16z" fill="#cfe3d5"/>',
+ grass:'<path d="M14 56c2-14 2-24 0-34M32 56c0-16 0-30 0-42M50 56c-2-14-2-24 0-34M8 56h48"/>',
+ rabbit:'<ellipse cx="28" cy="42" rx="18" ry="11" fill="#cfe3d5"/><circle cx="47" cy="33" r="8" fill="#cfe3d5"/><ellipse cx="44" cy="17" rx="3" ry="9" fill="#cfe3d5"/><ellipse cx="51" cy="18" rx="3" ry="8" fill="#cfe3d5"/><circle cx="49.5" cy="32" r="1.4" fill="#0a3324"/><circle cx="9" cy="40" r="3.5" fill="#fff"/>',
+ fox:'<path d="M10 14l14 12h16L54 14l-2 26-20 16-20-16z" fill="#cfe3d5"/><circle cx="24" cy="36" r="2" fill="#0a3324"/><circle cx="40" cy="36" r="2" fill="#0a3324"/><path d="M28 46l4 4 4-4"/>',
+ hawk:'<path d="M4 26c10-10 20-8 28 6 8-14 18-16 28-6-10 0-18 4-28 18C22 30 14 26 4 26z" fill="#cfe3d5"/>',
+ mushroom:'<path d="M8 36a24 20 0 0 1 48 0z" fill="#cfe3d5"/><path d="M26 36v14a6 6 0 0 0 12 0V36"/><circle cx="22" cy="28" r="2" fill="#0a3324"/><circle cx="36" cy="24" r="2" fill="#0a3324"/>',
+ factory:'<path d="M8 56V32l14 8V32l14 8V32l14 8v16z" fill="#cfe3d5"/><rect x="40" y="12" width="9" height="26" fill="#e9f1ec"/><path d="M20 10c0-4 6-4 6-8M30 12c0-4 6-4 6-8"/>',
+ soil:'<rect x="8" y="18" width="48" height="38" rx="3" fill="#e9f1ec"/><path d="M8 28c10-6 14 6 24 0s14 6 24 0M8 40c10-6 14 6 24 0s14 6 24 0"/><circle cx="18" cy="50" r="1.8" fill="#0a3324"/><circle cx="34" cy="48" r="1.8" fill="#0a3324"/><circle cx="46" cy="51" r="1.8" fill="#0a3324"/>',
+ wave:'<path d="M4 24c8-8 14 8 22 0s14 8 22 0 10 6 12 4M4 38c8-8 14 8 22 0s14 8 22 0 10 6 12 4M4 52c8-8 14 8 22 0s14 8 22 0 10 6 12 4"/>',
+ fish:'<ellipse cx="28" cy="32" rx="20" ry="12" fill="#cfe3d5"/><path d="M46 32l14-12v24z" fill="#cfe3d5"/><circle cx="18" cy="29" r="2" fill="#0a3324"/>',
+ rock:'<rect x="8" y="14" width="48" height="12" rx="3" fill="#e9f1ec"/><rect x="8" y="26" width="48" height="12" rx="3" fill="#cfe3d5"/><rect x="8" y="38" width="48" height="12" rx="3" fill="#e9f1ec"/>',
+ thermo:'<rect x="27" y="8" width="10" height="34" rx="5" fill="#fff"/><circle cx="32" cy="48" r="9" fill="#cfe3d5"/><path d="M32 18v30"/>',
+ drop:'<path d="M32 6C26 18 14 28 14 40a18 18 0 0 0 36 0C50 28 38 18 32 6z" fill="#cfe3d5"/>',
+ book:'<path d="M8 14h20a4 4 0 0 1 4 4v36a4 4 0 0 0-4-4H8zM56 14H36a4 4 0 0 0-4 4v36a4 4 0 0 1 4-4h20z" fill="#e9f1ec"/>',
+ news:'<rect x="8" y="12" width="48" height="40" rx="3" fill="#e9f1ec"/><rect x="14" y="18" width="20" height="12" fill="#cfe3d5"/><path d="M14 38h36M14 45h36M40 22h10M40 28h10"/>',
+ coin:'<circle cx="32" cy="32" r="22" fill="#cfe3d5"/><circle cx="32" cy="32" r="14"/><path d="M32 22v20"/>',
+ head:'<circle cx="32" cy="22" r="12" fill="#cfe3d5"/><path d="M8 58a24 22 0 0 1 48 0z" fill="#e9f1ec"/>',
+ people:'<circle cx="22" cy="22" r="9" fill="#cfe3d5"/><circle cx="44" cy="24" r="8" fill="#e9f1ec"/><path d="M4 54a18 16 0 0 1 36 0zM34 54a14 14 0 0 1 28 0z" fill="#e9f1ec"/>',
+ ballot:'<rect x="10" y="32" width="44" height="22" rx="3" fill="#e9f1ec"/><rect x="22" y="8" width="20" height="26" fill="#fff"/><path d="M26 19l4 4 8-9"/>',
+ home:'<path d="M8 30L32 10l24 20v26H8z" fill="#e9f1ec"/><rect x="26" y="38" width="12" height="18" fill="#cfe3d5"/>',
+ mega:'<path d="M10 26h12l24-12v36L22 38H10z" fill="#e9f1ec"/><path d="M22 38l4 14h8l-3-12M52 24c4 4 4 12 0 16"/>',
+ gear:'<circle cx="32" cy="32" r="16" stroke-width="8" stroke-dasharray="7 7.4" fill="none"/><circle cx="32" cy="32" r="14" fill="#cfe3d5"/><circle cx="32" cy="32" r="5" fill="#fff"/>',
+ globe:'<circle cx="32" cy="32" r="23" fill="#e9f1ec"/><ellipse cx="32" cy="32" rx="10" ry="23"/><path d="M9 32h46M13 20h38M13 44h38"/>',
+ scale:'<path d="M32 8v44M16 52h32M12 20h40"/><path d="M12 20L4 36h16zM52 20l-8 16h16z" fill="#cfe3d5"/>',
+ ball:'<path d="M6 18C16 18 20 50 32 50S48 18 58 18"/><circle cx="32" cy="41" r="6" fill="#0a3324"/>',
+ snow:'<path d="M32 6v52M9 19l46 26M9 45l46-26"/><path d="M26 10l6 6 6-6M26 54l6-6 6 6"/>',
+ cactus:'<rect x="26" y="8" width="12" height="48" rx="6" fill="#cfe3d5"/><path d="M26 36h-8a4 4 0 0 1-4-4V24M38 30h8a4 4 0 0 0 4-4V18"/>',
+ shrub:'<circle cx="32" cy="36" r="15" fill="#cfe3d5"/><circle cx="22" cy="42" r="8" fill="#cfe3d5"/><circle cx="43" cy="42" r="8" fill="#cfe3d5"/><path d="M32 51v7"/>',
+ moss:'<path d="M6 54c4-14 14-22 26-22s22 8 26 22z" fill="#cfe3d5"/><circle cx="22" cy="46" r="2" fill="#0a3324"/><circle cx="34" cy="42" r="2" fill="#0a3324"/><circle cx="44" cy="48" r="2" fill="#0a3324"/>',
+ bare:'<path d="M6 54l12-22 10 8 10-14 20 28z" fill="#e9f1ec"/>',
+ magnify:'<circle cx="27" cy="27" r="16" fill="#fff"/><path d="M39 39l16 16"/>',
+ grid:'<rect x="10" y="10" width="44" height="44" fill="#fff"/><path d="M10 25h44M10 40h44M25 10v44M40 10v44"/>',
+ loop:'<path d="M50 24a20 20 0 0 0-34-6M14 40a20 20 0 0 0 34 6"/><path d="M16 8v12h12M48 56V44H36"/>',
+ donut:'<circle cx="32" cy="32" r="18" fill="none" stroke="#cfe3d5" stroke-width="14"/><circle cx="32" cy="32" r="25"/><circle cx="32" cy="32" r="11"/>',
+ leaf:'<path d="M12 52C12 28 28 12 54 10c0 26-14 42-38 42z" fill="#cfe3d5"/><path d="M12 52L38 26"/>'
+};
+/* item: [id, icon, x, y, size, label ("|" = new line), title, text]  arrow: [path, kind, label, lx, ly, anchor] kind n=natural h=human or loss l=line */
+const PKS={
+ e11:{h:540,cap:'Your environmental value system: what goes in, what you decide, what comes out.',
+  items:[
+   ['in1','book',90,96,64,'Education|and science','Education and science','What you learn at school and from science shapes how you see nature.'],
+   ['in2','news',90,221,64,'Media and|campaigns','Media and campaigns','News, films and campaigns can change how a whole society thinks about the environment.'],
+   ['in3','coin',90,346,64,'Money and|daily life','Money and daily life','Your income, culture, religion and lived experience affect which choices feel realistic.'],
+   ['mid','head',380,221,112,'Your values|and beliefs','Your values and beliefs','Inside the system you weigh nature as valuable in itself (intrinsic) or valuable for what it gives us (instrumental). This is your perspective, backed by arguments.'],
+   ['out1','ballot',670,96,64,'Votes|and laws','Votes and laws','Values show up as how you vote and which policies and laws you support.'],
+   ['out2','home',670,221,64,'Lifestyle|choices','Lifestyle choices','What you buy, eat, and how you travel are visible outputs of your value system.'],
+   ['out3','mega',670,346,64,'Speaking up','Speaking up','Joining NGOs, campaigns and protests turns a view into action.'],
+   ['eco','tree',190,470,58,'Ecocentric|nature first','Ecocentric worldview','Nature has its own worth. Humans are one part of it, so use less and protect natural rights. Example response to climate change: cut fossil fuel demand.'],
+   ['anthro','head',380,470,58,'Anthropocentric|humans manage','Anthropocentric worldview','Humans act as managers who look after the environment for human well-being, using laws, taxes and agreements. Example: the Paris Agreement.'],
+   ['techno','gear',570,470,58,'Technocentric|tech solves it','Technocentric worldview','Science, technology and markets can solve environmental problems without stopping growth. Example: carbon capture and electric vehicles.']
+  ],
+  arrows:[
+   ['M138,108L318,198','n'],['M138,221L316,221','n'],['M138,334L318,244','n'],
+   ['M444,198L622,108','n'],['M444,221L622,221','n'],['M444,244L622,334','n'],
+   ['M660,44H120','h','What happens changes what people believe',390,32,'middle'],
+   ['M250,470H318','l'],['M442,470H510','l']
+  ]},
+ e12:{h:560,cap:'A system: energy and matter flow through stores, and feedback decides what happens next.',
+  items:[
+   ['sun','sun',70,116,66,'Sun','Solar energy input','Light energy enters the system and powers photosynthesis. Energy flows in as light and out as heat. It is not recycled.'],
+   ['prod','tree',290,116,70,'Producers|(a store)','Producers: a storage','A box in a systems diagram is a storage of matter or energy. Bigger storages make a system more resilient.'],
+   ['cons','rabbit',440,116,70,'Consumers','Consumers','Eating moves energy and matter from producers to consumers. A transfer: the location changes, the chemical form does not.'],
+   ['dec','mushroom',590,116,70,'Decomposers','Decomposers','Decomposers break down dead matter and release nutrients back to the soil. They also lose heat.'],
+   ['heat','thermo',440,300,64,'Heat lost|to the air','Heat out','Every energy change loses heat (2nd law of thermodynamics). It leaves through the boundary, even in a closed system.'],
+   ['in','drop',70,290,60,'Matter in|(rain, minerals)','Matter in','Open systems, like a forest, gain matter from outside. Earth overall is closed: energy crosses its boundary, matter does not.'],
+   ['out','wave',715,290,60,'Matter out|(runoff)','Matter out','Open systems also lose matter, for example in rivers and runoff.'],
+   ['neg','scale',170,448,58,'Negative feedback|pulls it back','Negative feedback','A balancing loop: more prey leads to more predators, then fewer prey, which pulls the system back to equilibrium. An odd number of minus links.'],
+   ['pos','snow',380,448,58,'Positive feedback|amplifies change','Positive feedback','A reinforcing loop: warming melts ice, less white surface reflects sunlight, so more heat is absorbed and warming grows. An even number of minus links.'],
+   ['tip','ball',590,448,58,'Tipping point|no way back','Tipping point','Past a threshold the system flips into a new stable state (for example rainforest to savanna). Getting back needs much more than reversing the stress: hysteresis.']
+  ],
+  arrows:[
+   ['M104,116L246,116','n','Energy in',175,92,'middle'],['M328,116L396,116','n'],['M478,116L546,116','n'],
+   ['M440,160V268','h','Heat out',480,224,'start'],['M96,262L252,146','n','Matter in',196,238,'start'],['M628,152L690,262','n']
+  ],
+  extra:'<rect x="150" y="48" width="490" height="226" rx="18" fill="none" stroke="#1f6b49" stroke-width="2.5" stroke-dasharray="9 7"/><text x="395" y="42" text-anchor="middle" class="pk-note">System boundary</text>'},
+ e13:{h:470,cap:'Sustainability: living within the limits of the planet while meeting human needs.',
+  items:[
+   ['coin','coin',200,262,50,'Economy','Economy','Strong sustainability puts the economy inside society and society inside nature. Break the outer ring and everything inside collapses.'],
+   ['donut','donut',545,110,88,'Doughnut model|a safe and just space','Doughnut economics','Stay above a social floor (food, health, equality) and below an ecological ceiling. In between is the safe and just space for humanity.'],
+   ['globe','globe',690,110,70,'Planetary|limits','Planetary boundaries','Nine Earth-system limits, such as climate change and biodiversity loss. Crossing them risks large, abrupt change.'],
+   ['loop','loop',545,300,88,'Circular economy|reuse, repair, recycle','Circular economy','Keep materials in use instead of take, make, throw away. The butterfly model shows two loops: biological and technical.'],
+   ['scale','scale',690,300,70,'Weak or strong?','Weak vs strong sustainability','Weak: money and machines can replace nature. Strong: some natural capital cannot be replaced, so nature sets the limit.']
+  ],
+  arrows:[],
+  extra:'<circle cx="200" cy="222" r="170" fill="#e9f1ec" stroke="#0a3324" stroke-width="2.5"/><circle cx="200" cy="248" r="118" fill="#cfe3d5" stroke="#0a3324" stroke-width="2.5"/><circle cx="200" cy="282" r="76" fill="#fff" stroke="#0a3324" stroke-width="2.5"/><text x="200" y="76" text-anchor="middle" class="pk-ring">Nature</text><text x="200" y="152" text-anchor="middle" class="pk-ring">Society</text>'},
+ e21:{h:470,cap:'Populations grow until the environment sets a limit. We estimate them by sampling.',
+  items:[
+   ['fish1','fish',470,92,66,'1. Catch, mark|and release','Capture-mark-recapture','Catch some animals, mark them harmlessly, release them. This gives M, the number marked.'],
+   ['fish2','fish',620,92,66,'2. Catch again|count the marked','Recapture','On a second visit catch n animals and count R, how many are marked. A large R means a small population.'],
+   ['quad','grid',130,350,70,'Quadrat|count in squares','Quadrat sampling','Count plants in small squares placed at random and scale up. Good for plants and slow animals.'],
+   ['rand','magnify',330,350,70,'Sample randomly|to avoid bias','Random sampling','Choosing spots at random stops you from picking only easy or interesting places, which would bias the result.'],
+   ['trans','grass',530,350,70,'Transect|sample along a line','Transect sampling','Sample at regular steps along a line to see how species change across a gradient, such as up a shore.']
+  ],
+  arrows:[['M505,92H582','n']],
+  extra:'<path d="M60,40V230H380" fill="none" stroke="#0a3324" stroke-width="2.5"/><path d="M60,214C110,212 140,196 180,142C214,98 254,66 376,62" fill="none" stroke="#1f6b49" stroke-width="5"/><path d="M60,62H376" stroke="#0a3324" stroke-width="2" stroke-dasharray="8 6"/><text x="68" y="50" class="pk-note">K: the most the environment can carry</text><text x="220" y="252" text-anchor="middle" class="pk-note">Time</text><text x="52" y="136" text-anchor="middle" class="pk-note" transform="rotate(-90 52 136)">Population</text><text x="545" y="232" text-anchor="middle" class="pk-formula">N = (M × n) ÷ R</text><text x="545" y="258" text-anchor="middle" class="pk-note">Lincoln index: estimates the whole population</text>'},
+ e22:{h:480,cap:'Energy flows one way through a food chain, and about 90% is lost at each step.',
+  items:[
+   ['sun','sun',60,160,64,'Sun','Solar energy','Only a small part of sunlight, about 1 to 2%, is captured by producers in photosynthesis.'],
+   ['t1','sprout',220,160,70,'Producers|8,400','Producers (trophic level 1)','Producers make the chemical energy that supports the whole ecosystem. Net primary productivity (NPP) = gross primary productivity (GPP) minus respiration (R).'],
+   ['t2','rabbit',360,160,70,'Herbivores|840','Primary consumers','Only about 10% of the energy in the food they eat becomes new herbivore biomass.'],
+   ['t3','fox',500,160,70,'Carnivores|84','Secondary consumers','Another 10% passes on, so there is much less energy left for the next level.'],
+   ['t4','hawk',640,160,70,'Top predators|8.4','Tertiary consumers and top predators','Little energy remains, which is why food chains rarely have more than four or five levels.'],
+   ['heat','thermo',420,360,64,'About 90% is lost|as heat at each step','Heat loss (10% rule)','Respiration, movement and waste lose most energy as heat. Energy is not recycled, only matter is.'],
+   ['dec','mushroom',130,360,64,'Decomposers|recycle dead matter','Decomposers','They return nutrients to the soil so that producers can use them again.']
+  ],
+  arrows:[
+   ['M96,160L180,160','n','Light',138,132,'middle'],['M260,160L320,160','n','10%',290,132,'middle'],['M400,160L460,160','n','10%',430,132,'middle'],['M540,160L600,160','n','10%',570,132,'middle'],
+   ['M220,262V318','h'],['M360,262V318','h'],['M500,262V318','h'],['M640,262V318','h'],
+   ['M200,318H660','l']
+  ],
+  extra:'<text x="380" y="52" text-anchor="middle" class="pk-note">Energy in each level, in kJ per m² per year</text>'},
+ e23:{h:600,cap:'Carbon moves between stores. Burning fossil fuels adds more to the air than the sinks can take.',
+  items:[
+   ['atm','cloud',110,64,64,'Atmosphere|880 GtC','Atmosphere','A small, fast store. Before industry it held about 590 GtC (280 ppm). Today it holds about 880 GtC and is rising by about 4.5 GtC each year.','r'],
+   ['bio','tree',190,235,76,'Forests|610 GtC','Land biota','Plants and trees store carbon. A mature forest is a store, a young growing forest is a sink, a burning forest is a source.'],
+   ['fac','factory',380,235,76,'Burning fossil|fuels +9.5','Fossil fuels','Burning coal, oil and gas moves ancient carbon into the air. Together with deforestation (+1.5) this adds 11.0 GtC each year.'],
+   ['sea','wave',610,235,76,'Surface ocean|970 GtC','Surface ocean','Absorbs CO2 from the air. More dissolved CO2 makes the water more acidic, which harms corals and shellfish.'],
+   ['soil','soil',190,420,70,'Soils|1,580 GtC','Soils and permafrost','The largest land store. Warming thaws permafrost and releases CO2 and methane: a positive feedback.','r'],
+   ['deep','fish',610,420,70,'Deep ocean|38,000 GtC','Deep ocean','The largest active store. Carbon sinks here and stays for about 1,000 years.','l'],
+   ['rock','rock',610,545,70,'Rocks|1,000,000+ GtC','Sedimentary rocks','Shells and skeletons form limestone over millions of years: the largest and slowest store.','l']
+  ],
+  arrows:[
+   ['M158,108V190','n','Photosynthesis',150,152,'end'],['M222,192V108','n','Respiration',232,152,'start'],
+   ['M380,192V108','h','Burning',392,152,'start'],
+   ['M578,108V190','n','Dissolves',570,152,'end'],['M642,192V108','n','Outgasses',652,152,'start'],
+   ['M190,334V376','n','Litter',204,360,'start'],
+   ['M610,334V376','n','Sinks',624,360,'start'],
+   ['M610,468V498','n','Shells sink',592,488,'end']
+  ],
+  extra:'<rect x="30" y="24" width="700" height="80" rx="34" fill="#e9f1ec" stroke="#0a3324" stroke-width="2.5"/>'},
+ e24:{h:500,cap:'Heat from the sun drives moving air, and moving air sets the climate and the biomes.',
+  items:[
+   ['eq','tree',110,196,78,'Tropical|rainforest','Equator: tropical rainforest','The sun is most direct here. Hot, wet air rises and cools, so rain falls all year. This gives the highest productivity and biodiversity.'],
+   ['d30','cactus',290,196,78,'Desert|hot and dry','Around 30 degrees: desert','Dry air sinks here, warms up and takes moisture from the land. This is why most deserts lie near 30 degrees north and south.'],
+   ['f60','shrub',470,196,78,'Temperate|forest','Around 60 degrees: temperate forest','Air rises again, bringing rain. The climate is cooler with distinct seasons.'],
+   ['pol','snow',650,196,78,'Polar|cold and dry','Poles: tundra and ice','Cold, dense air sinks. It is very dry and cold, so plants grow slowly and productivity is low.'],
+   ['sun','sun',110,410,56,'Sunlight|is strongest here','Why it starts with the sun','The equator gets the most solar energy per square metre, which heats air and starts the circulation (the tricellular model).']
+  ],
+  arrows:[
+   ['M110,148V86','n','Air rises, rain',110,70,'middle'],['M290,86V148','n','Air sinks, dry',290,70,'middle'],['M470,148V86','n','Air rises',470,70,'middle'],['M650,86V148','n','Air sinks',650,70,'middle'],
+   ['M60,312H700','l']
+  ],
+  extra:'<text x="110" y="338" text-anchor="middle" class="pk-note">Equator 0°</text><text x="290" y="338" text-anchor="middle" class="pk-note">30°</text><text x="470" y="338" text-anchor="middle" class="pk-note">60°</text><text x="650" y="338" text-anchor="middle" class="pk-note">Pole 90°</text>'},
+ e25:{h:570,cap:'Succession is change through time. Zonation is change across space.',
+  items:[
+   ['s1','bare',80,120,70,'Bare rock|pioneers','Primary succession starts','Life starts on bare rock or new lava. Pioneer species such as lichens break the rock into the first soil.'],
+   ['s2','moss',225,120,70,'Moss|and lichen','Early colonisers','Mosses add organic matter. Soil becomes deeper and holds more water.'],
+   ['s3','grass',370,120,70,'Grasses|and herbs','Grass stage','Fast-growing small plants take over as soil improves.'],
+   ['s4','shrub',515,120,70,'Shrubs','Shrubs','Taller plants shade out grasses. Diversity and soil depth keep rising.'],
+   ['s5','tree',660,120,70,'Climax|woodland','Climax community','A stable community in balance with its climate, with high diversity and resilience.'],
+   ['z1','wave',80,408,64,'Zone 1|sea edge','Zone 1','Conditions change gradually along a transect line, so different species live in each zone.'],
+   ['z2','rock',225,408,64,'Zone 2|rocks','Zone 2','Each zone has its own light, moisture, salt and soil, which decide what can live there.'],
+   ['z3','grass',370,408,64,'Zone 3|grass','Zone 3','Sample at regular points along the transect and plot the results as a kite diagram.'],
+   ['z4','shrub',515,408,64,'Zone 4|shrubs','Zone 4','Species abundance changes with the environmental gradient.'],
+   ['z5','tree',660,408,64,'Zone 5|woodland','Zone 5','Zonation looks at one moment in space. Succession looks at one place over time.']
+  ],
+  arrows:[
+   ['M122,120H183','n'],['M267,120H328','n'],['M412,120H473','n'],['M557,120H618','n'],['M80,238H680','l','Time: decades to centuries',380,266,'middle'],
+   ['M80,520H680','l','Distance along the transect',380,548,'middle']
+  ],
+  extra:'<text x="30" y="34" class="pk-head">Succession: change through time</text><text x="30" y="316" class="pk-head">Zonation: change across space</text>'}
+};
+function pkLines(t,x,y,cls,anc){const a=String(t).split('|');return a.map((l,i)=>'<text class="'+cls+'" x="'+x+'" y="'+(y+i*19)+'" text-anchor="'+(anc||'middle')+'">'+l+'</text>').join('')}
+function pkSvg(id,sel){const sp=PKS[id];let o='<svg viewBox="0 0 760 '+sp.h+'" role="img" aria-label="'+escH(sp.cap)+'"><defs><marker id="pkA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto"><path d="M0,0L10,5L0,10z" fill="#1f6b49"/></marker><marker id="pkH" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto"><path d="M0,0L10,5L0,10z" fill="#0a3324"/></marker></defs>';
+ if(sp.extra)o+=sp.extra;
+ sp.arrows.forEach(a=>{const k=a[1];const st=k==='h'?'stroke="#0a3324" stroke-width="4" stroke-dasharray="10 6" marker-end="url(#pkH)"':(k==='l'?'stroke="#56615b" stroke-width="2.5"':'stroke="#1f6b49" stroke-width="4" marker-end="url(#pkA)"');
+  o+='<path d="'+a[0]+'" fill="none" '+st+'/>';if(a[2])o+='<text class="pk-al" x="'+a[3]+'" y="'+a[4]+'" text-anchor="'+(a[5]||'middle')+'">'+a[2]+'</text>'});
+ sp.items.forEach(it=>{const sz=it[4],x=it[2],y=it[3];
+  o+='<g class="pi'+(sel===it[0]?' sel':'')+'" data-pki="'+it[0]+'" tabindex="0" role="button" aria-label="'+escH(it[6])+'"><circle class="pi-bg" cx="'+x+'" cy="'+y+'" r="'+(sz*0.64)+'"/><g transform="translate('+(x-sz/2)+','+(y-sz/2)+') scale('+(sz/64)+')" fill="none" stroke="#0a3324" stroke-width="'+(2.6*64/sz)+'" stroke-linecap="round" stroke-linejoin="round">'+PKI[it[1]]+'</g>'+(it[8]==='r'?pkLines(it[5],x+sz*0.64+12,y-(String(it[5]).split('|').length-1)*9.5+6,'pi-t','start'):(it[8]==='l'?pkLines(it[5],x-sz*0.64-12,y-(String(it[5]).split('|').length-1)*9.5+6,'pi-t','end'):pkLines(it[5],x,y+sz*0.64+22,'pi-t')))+'</g>'});
+ return o+'</svg>'}
+function pkInfo(id,sel){const it=PKS[id].items.find(x=>x[0]===sel)||PKS[id].items[0];return '<h4>'+escH(it[6])+'</h4><p>'+escH(it[7])+'</p>'}
+function pkBox(id,det){const sp=PKS[id],first=sp.items[0][0];
+ return '<div class="pk" data-pk="'+id+'" data-sel="'+first+'"><div class="pk-tabs" role="tablist"><button type="button" class="on" data-pkt="pic">Picture</button><button type="button" data-pkt="det">Detailed diagram</button></div><div class="pk-view" data-pkv="pic"><p class="pk-cap">'+escH(sp.cap)+'</p><div class="pk-scroll">'+pkSvg(id,first)+'</div><div class="pk-info">'+pkInfo(id,first)+'</div><p class="pk-hint">Tap a symbol to read about it. Solid arrows are natural flows. Dashed arrows are human-caused or lost heat.</p></div><div class="pk-view" data-pkv="det" hidden>'+det+'</div></div>'}
+function pkSelect(box,id,sel){box.setAttribute('data-sel',sel);box.querySelectorAll('.pi').forEach(g=>g.classList.toggle('sel',g.getAttribute('data-pki')===sel));box.querySelector('.pk-info').innerHTML=pkInfo(id,sel)}
+function picWrap(tid,fn,embed){const det=fn(embed);if(!embed||!PKS[tid])return det;return pkBox(tid,det)}
+if(document.addEventListener){
+ document.addEventListener('click',e=>{const t=e.target;if(!t.closest)return;const box=t.closest('.pk');if(!box)return;const id=box.getAttribute('data-pk');
+  const tab=t.closest('[data-pkt]');if(tab&&box.contains(tab)){const v=tab.getAttribute('data-pkt');box.querySelectorAll('[data-pkt]').forEach(b=>b.classList.toggle('on',b===tab));box.querySelectorAll('[data-pkv]').forEach(p=>{if(p.getAttribute('data-pkv')===v)p.removeAttribute('hidden');else p.setAttribute('hidden','')});if(v==='det'){try{window.dispatchEvent(new Event('resize'))}catch(x){}}return}
+  const it=t.closest('[data-pki]');if(it&&box.contains(it)){const sel=it.getAttribute('data-pki');pkSelect(box,id,sel)}});
+ document.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const it=e.target.closest&&e.target.closest('.pk [data-pki]');if(!it)return;e.preventDefault();const box=it.closest('.pk'),id=box.getAttribute('data-pk'),sel=it.getAttribute('data-pki');pkSelect(box,id,sel)})}
+/*PIC-END*/
 function welcomeEcon(){
   const units=['Unit 1','Unit 2','Unit 3','Unit 4'].map(u=>{const ts=T.filter(t=>unitNum(t)===u);const d=ts.filter(t=>studied[t.id]).length;return '<div class="tile"><div><b>'+unitName(ts[0])+'</b><span>'+ts.length+' topics, '+d+' studied</span></div><a class="pill" href="#'+ts[0].id+'">Study</a></div>'}).join('');
   let last='';try{last=localStorage.getItem('econ-last')||''}catch(e){}
