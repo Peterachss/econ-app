@@ -1,5 +1,5 @@
-const CACHE = 'econ-app-v10';
-const ASSETS = ['./', './index.html', './manifest.webmanifest', './assets/ess-slides/manifest.js', './assets/archify/ess-viewer.css', './assets/archify/ess-viewer.js'];
+const CACHE = 'econ-app-v11';
+const ASSETS = ['./', './index.html', './manifest.webmanifest', './assets/ess-slides/manifest.js', './assets/econ-slides/manifest.js', './assets/biz-slides/manifest.js', './assets/archify/ess-viewer.css', './assets/archify/ess-viewer.js'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
