@@ -1902,7 +1902,7 @@ function snLoad(){try{const v=JSON.parse(localStorage.getItem(SNOTES_KEY)||'{}')
 let snWarned=false;
 function snSave(m){try{localStorage.setItem(SNOTES_KEY,JSON.stringify(m));return true}catch(e){if(!snWarned){snWarned=true;toast('Notes could not be saved in this browser.')}return false}}
 function snKey(sb,tid,n){return sb+':'+tid+':'+n}
-function slideThumb(tid,pno,sb){const p=slidePath(tid,pno,sb);return slideSubjOf(tid,sb)==='ess'?p:p.replace(/\.webp$/,'.t.webp')}
+function slideThumb(tid,pno,sb){return slidePath(tid,pno,sb).replace(/\.webp$/,'.t.webp')}
 function stuTx(ref,text){const el=typeof ref==='string'?document.getElementById(ref):ref;if(!el)return;el.textContent=text;applyLang(el)}
 function stuReduced(){return !!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)}
 function stuEl(){let el=document.getElementById('s-studio');if(el)return el;
